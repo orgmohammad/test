@@ -14,6 +14,7 @@
       --black:#0b0b0b;
       --gold:#d4af37;
       --muted:#9aa3ad;
+      --glass: rgba(255,255,255,0.03);
     }
 
     *{box-sizing:border-box}
@@ -21,51 +22,114 @@
     body{
       margin:0;
       font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
-      background: linear-gradient(180deg,var(--bg-dark), #071029 120%);
       color: #f3f4f6;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
       line-height:1.6;
       overflow-x:hidden;
+      background: linear-gradient(180deg,var(--bg-dark), #071029 120%);
+      position:relative;
     }
 
-    .wrap{max-width:1200px;margin:0 auto;padding:28px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    /* ---------- Animated cinematic background (image + gradient) ---------- */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background: url('https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-25_06-29-40.jpg') center/cover no-repeat fixed;
+      transform-origin: center;
+      transition: transform 12s linear, filter 10s linear;
+      will-change: transform, filter;
+      filter: brightness(.85) contrast(1.02);
+    }
+    .bg-gradient {
+      position: fixed; inset:0; z-index:-2;
+      background: linear-gradient(180deg, rgba(7,7,10,0.66), rgba(7,16,41,0.66));
+      pointer-events:none;
+    }
+    /* subtle slow movement for cinematic feel */
+    @keyframes bgShift {
+      0%{ transform: scale(1) translateY(0px); filter: brightness(.9) blur(0px); }
+      50%{ transform: scale(1.02) translateY(-8px); filter: brightness(1.06) blur(1px); }
+      100%{ transform: scale(1) translateY(0px); filter: brightness(.9) blur(0px); }
+    }
+    .bg-layer.animate { animation: bgShift 40s ease-in-out infinite; }
+
+    /* particles canvas on top of bg */
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      opacity: .55;
+    }
+
+    .wrap{max-width:1200px;margin:0 auto;padding:28px;position:relative;z-index:2}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
     .brand{display:flex;gap:14px;align-items:center}
 
     .logo{
-      width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#ffd66b);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--black);font-family:Inter, sans-serif;font-size:20px;letter-spacing:2px;box-shadow:0 6px 20px rgba(0,0,0,0.6);transform:translateZ(0);
+      width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#ffd66b);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--black);font-family:Inter, sans-serif;font-size:20px;letter-spacing:2px;box-shadow:0 6px 20px rgba(212,175,55,0.35);transform:translateZ(0);
+      position:relative; overflow:visible;
     }
+    /* sparkle overlay on logo */
+    .logo::after{
+      content:"";
+      position:absolute; inset:-8px;
+      border-radius:16px;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15), transparent 8%),
+                  radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08), transparent 12%);
+      mix-blend-mode: overlay;
+      opacity:0.85;
+      pointer-events:none;
+      transform: translateZ(0);
+      transition: opacity .8s ease;
+    }
+    .logo.glow{ box-shadow:0 12px 40px rgba(212,175,55,0.35), 0 2px 8px rgba(0,0,0,.6); transform: translateY(-1px) scale(1.02);}
+
     nav{display:flex;gap:12px;align-items:center}
     .lang-switch{display:flex;gap:8px}
-    .lang{cursor:pointer;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.03);font-weight:700}
+    .lang{cursor:pointer;padding:8px 10px;border-radius:8px;background:var(--glass);font-weight:700;transition:all .3s}
     .lang.active{background:linear-gradient(90deg,var(--gold),#ffd66b);color:var(--black)}
 
     .hero{
       margin-top:26px;display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:center
     }
 
-    .hero-card{padding:28px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+    .hero-card{padding:28px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);box-shadow:0 10px 30px rgba(2,6,23,0.6);transform:translateY(0);opacity:1;transition:all .7s cubic-bezier(.2,.9,.3,1)}
+    .hero-card.revealed{ transform:translateY(0); opacity:1; }
     h1{margin:0;font-size:34px}
     p.lead{color:var(--muted);margin-top:10px;font-size:15px}
 
-    .pxr-mark{font-family:Inter, sans-serif;font-weight:900;font-size:54px;letter-spacing:6px;color:var(--gold);text-shadow:0 6px 30px rgba(212,175,55,0.12);}
+    .pxr-mark{font-family:Inter, sans-serif;font-weight:900;font-size:54px;letter-spacing:6px;color:var(--gold);text-shadow:0 6px 30px rgba(212,175,55,0.18);display:inline-block;position:relative;overflow:visible}
+    /* subtle glitter sweep on pxr */
+    .pxr-mark::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.35) 45%, rgba(255,255,255,0.0) 70%);
+      transform: translateX(-120%);
+      transition: transform 1.2s ease;
+      pointer-events:none;
+      mix-blend-mode: overlay;
+    }
+    .pxr-mark.sweep::after{ transform: translateX(120%); }
 
     .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s;text-decoration:none;color:inherit}
-    .btn:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.6)}
-    .btn.gold{background:linear-gradient(90deg,var(--gold),#ffd66b);color:var(--black);font-weight:700}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:all .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s;text-decoration:none;color:inherit}
+    .btn:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 18px 50px rgba(2,6,23,0.6)}
+    .btn.gold{background:linear-gradient(90deg,var(--gold),#ffd66b);color:var(--black);font-weight:700;box-shadow:0 8px 30px rgba(212,175,55,0.12);}
 
-    .side-panel{position:relative;height:420px;border-radius:14px;overflow:hidden}
-    .side-panel img{width:100%;height:100%;object-fit:cover;transform:scale(1.03);transition:transform 10s linear}
-    .side-panel:hover img{transform:scale(1.08) rotate(0.2deg)}
-    .side-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.45));display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
+    .side-panel{position:relative;height:420px;border-radius:14px;overflow:hidden;transition:transform .8s ease}
+    .side-panel img{width:100%;height:100%;object-fit:cover;transform:scale(1.03);transition:transform 12s linear}
+    .side-panel:hover img{transform:scale(1.12) rotate(0.2deg)}
+    .side-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.5));display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
 
     .about{margin-top:18px;padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
     .muted{color:var(--muted)}
 
     .sticky-cta{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:12px;z-index:1200}
-    .bubble{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(2,6,23,0.6);cursor:pointer}
+    .bubble{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(2,6,23,0.6);cursor:pointer;transition:all .3s}
     .bubble.gold{background:linear-gradient(90deg,var(--gold),#ffd66b);color:var(--black)}
     .bubble.insta{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03));color:var(--gold);border:1px solid rgba(255,255,255,0.04)}
 
@@ -89,16 +153,29 @@
     .pulse{animation:pulse 2.6s ease-in-out infinite}
 
     .links-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
-    .link-card{padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;gap:10px}
+    .link-card{padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;gap:10px;cursor:pointer;transition:transform .22s}
+    .link-card:hover{transform:translateY(-6px) scale(1.02)}
 
-    footer{margin-top:40px;color:var(--muted);text-align:center}
+    footer{margin-top:40px;color:var(--muted);text-align:center;position:relative;z-index:2;padding-bottom:60px}
+
+    /* mini audio control */
+    .audio-control{
+      position:fixed;left:18px;bottom:18px;z-index:1300;display:flex;align-items:center;gap:10px;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(255,255,255,0.02));padding:8px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);backdrop-filter: blur(6px);
+    }
+    .audio-btn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,0.04)}
+    .audio-range{width:110px}
   </style>
 </head>
-<body style="background: linear-gradient(rgba(5,5,7,0.85), rgba(7,16,41,0.85)), url('https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-25_06-29-40.jpg') no-repeat center center fixed; background-size: cover;">
+<body>
+  <!-- Cinematic background + particles -->
+  <div class="bg-layer animate" aria-hidden="true"></div>
+  <div class="bg-gradient" aria-hidden="true"></div>
+  <canvas id="particles" aria-hidden="true"></canvas>
+
   <div class="wrap">
     <header>
       <div class="brand">
-        <div class="logo">PXR</div>
+        <div class="logo" id="logoEl">PXR</div>
         <div>
           <div style="font-weight:800">PXR — سبک معاملاتی</div>
           <div class="muted small">بنیان‌گذار: Mohammad Amin</div>
@@ -140,7 +217,7 @@
               شما یاد می‌گیرید که با ترند‌لاین اختصاصی سبک PXR، پس از شکست، وارد معامله شوید و نسبت ریسک به ریوارد (R/R) بالای ۶ یا حتی بیشتر به دست آورید.
               در حالی که شاید ظاهر حرکت فقط یک «شکست روند» ساده باشد، اما در واقع در پشت‌صحنهٔ آن، یک MSS شکل گرفته و قیمت در حال واکنش به یک Order Block دقیق است.
               <br><br>
-              یعنی شما بدون نیاز به تحلیل‌های سنگین و زمان‌بر، در واقع دارید بر پایه‌ی ساختارهای هوشمند بازار و نقدینگی معامله می‌کنید — فقط با استفاده از الگوهای ساده و منسجم.
+              یعنی شما بدون نیاز به تحلیل‌های سنگین و زمان‌بر، در واقع دارید بر پایهٔ ساختارهای هوشمند بازار و نقدینگی معامله می‌کنید — فقط با استفاده از الگوهای ساده و منسجم.
               <br><br>
               من با سبک PXR، تمام مسیر سه‌سالهٔ تجربه، آزمون و خطا و یادگیری خودم را در قالب یک سیستم آموزشی سه‌ماهه خلاصه کرده‌ام.
               تا شما بدون سردرگمی و اتلاف وقت، مستقیماً به مرحلهٔ درک و سودآوری منطقی برسید.
@@ -217,7 +294,16 @@
     <div class="glow" style="left:5%;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), transparent 30%);bottom:-10%"></div>
   </div>
 
+  <!-- Audio control (procedural ambient via WebAudio) -->
+  <div class="audio-control" id="audioControl" aria-hidden="false" title="موسیقی پس‌زمینه">
+    <button class="audio-btn" id="audioToggle" aria-pressed="false" title="پخش / توقف">
+      ▶
+    </button>
+    <input class="audio-range" id="audioVol" type="range" min="0" max="1" step="0.01" value="0.18" aria-label="Volume">
+  </div>
+
   <script>
+    // ========== Keep existing translations + language logic (unchanged content) ==========
     const headerImageURL = "https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-22_10-57-52.jpg";
     const backgroundImageURL = "https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-25_06-29-40.jpg";
 
@@ -239,7 +325,7 @@
         شما یاد می‌گیرید که با ترند‌لاین اختصاصی سبک PXR، پس از شکست، وارد معامله شوید و نسبت ریسک به ریوارد (R/R) بالای ۶ یا حتی بیشتر به دست آورید.
         در حالی که شاید ظاهر حرکت فقط یک «شکست روند» ساده باشد، اما در واقع در پشت‌صحنهٔ آن، یک MSS شکل گرفته و قیمت در حال واکنش به یک Order Block دقیق است.
         <br><br>
-        یعنی شما بدون نیاز به تحلیل‌های سنگین و زمان‌بر، در واقع دارید بر پایهٔ ساختارهای هوشمند بازار و نقدینگی معامله می‌کنید — فقط با استفاده از الگوهای ساده و منسجم.
+        یعنی شما بدون نیاز به تحلیل‌های سنگین و زمان‌بر، در واقع دارید بر پایه‌ی ساختارهای هوشمند بازار و نقدینگی معامله می‌کنید — فقط با استفاده از الگوهای ساده و منسجم.
         <br><br>
         من با سبک PXR، تمام مسیر سه‌سالهٔ تجربه، آزمون و خطا و یادگیری خودم را در قالب یک سیستم آموزشی سه‌ماهه خلاصه کرده‌ام.
         تا شما بدون سردرگمی و اتلاف وقت، مستقیماً به مرحلهٔ درک و سودآوری منطقی برسید.`,
@@ -300,6 +386,7 @@
       }
     };
 
+    // language switching (same UX as original)
     const langElements = document.querySelectorAll(".lang");
     const contentMap = {
       "hero-head": "heroTitle",
@@ -318,11 +405,242 @@
         const lang = el.dataset.lang;
         for(const id in contentMap){
           const key = contentMap[id];
-          document.getElementById(id).innerHTML = translations[lang][key];
+          const elm = document.getElementById(id);
+          if(elm) elm.innerHTML = translations[lang][key];
         }
+        // direction
         document.getElementById("content-area").className = lang==="en"?"dir-ltr":"dir-rtl";
+        // small sweep effect on pxr
+        const px = document.querySelector('.pxr-mark');
+        px.classList.remove('sweep');
+        void px.offsetWidth;
+        px.classList.add('sweep');
       });
     });
+
+    // set images (in case you want to change via JS)
+    (function(){
+      const img = document.getElementById('hero-image');
+      if (headerImageURL) img.src = headerImageURL;
+      // set bg-layer image (already inline CSS uses same URL but keep script to be robust)
+      const bg = document.querySelector('.bg-layer');
+      if (backgroundImageURL) bg.style.backgroundImage = `url('${backgroundImageURL}')`;
+    })();
+
+    // ========= particles canvas (lightweight) =========
+    (function(){
+      const canvas = document.getElementById('particles');
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = innerWidth;
+      let h = canvas.height = innerHeight;
+      const DPR = Math.max(1, window.devicePixelRatio || 1);
+      canvas.width = innerWidth * DPR;
+      canvas.height = innerHeight * DPR;
+      canvas.style.width = innerWidth + 'px';
+      canvas.style.height = innerHeight + 'px';
+      ctx.scale(DPR, DPR);
+
+      let particles = [];
+      const COUNT = Math.max(18, Math.floor((w*h)/80000)); // responsive count
+
+      function rand(min,max){ return Math.random()*(max-min)+min; }
+
+      function make(){
+        particles = [];
+        for(let i=0;i<COUNT;i++){
+          particles.push({
+            x: rand(0,w),
+            y: rand(0,h),
+            r: rand(0.6,2.6),
+            vx: rand(-0.15,0.15),
+            vy: rand(-0.05,0.12),
+            alpha: rand(0.08,0.28)
+          });
+        }
+      }
+      make();
+
+      function resize(){
+        w = canvas.width = innerWidth * DPR;
+        h = canvas.height = innerHeight * DPR;
+        canvas.style.width = innerWidth + 'px';
+        canvas.style.height = innerHeight + 'px';
+        ctx.setTransform(DPR,0,0,DPR,0,0);
+        make();
+      }
+      addEventListener('resize', resize);
+
+      function draw(){
+        ctx.clearRect(0,0,innerWidth,innerHeight);
+        for(let p of particles){
+          p.x += p.vx;
+          p.y -= p.vy;
+          if(p.x < -20) p.x = innerWidth+20;
+          if(p.x > innerWidth+20) p.x = -20;
+          if(p.y < -20) p.y = innerHeight+20;
+          if(p.y > innerHeight+20) p.y = -20;
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(212,175,55,${p.alpha})`;
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    // ========== Scroll reveal (IntersectionObserver) ==========
+    (function(){
+      const obs = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting){
+            e.target.classList.add('revealed');
+            obs.unobserve(e.target);
+          }
+        });
+      }, {threshold: 0.12});
+
+      document.querySelectorAll('.hero-card, .side-panel, .about, .link-card, .hero-card .actions').forEach(el=>{
+        // initial state
+        el.style.opacity = 0; el.style.transform = 'translateY(18px)'; el.style.transition = 'opacity .8s ease, transform .8s cubic-bezier(.2,.9,.3,1)';
+        obs.observe(el);
+      });
+    })();
+
+    // ========== logo micro-interaction ==========
+    (function(){
+      const logo = document.getElementById('logoEl');
+      logo.addEventListener('mouseenter', ()=> logo.classList.add('glow'));
+      logo.addEventListener('mouseleave', ()=> logo.classList.remove('glow'));
+      // small periodic sparkle
+      setInterval(()=>{ logo.classList.add('glow'); setTimeout(()=>logo.classList.remove('glow'),900); }, 4200);
+    })();
+
+    // ========== background subtle parallax on pointer move for depth ==========
+    (function(){
+      const bg = document.querySelector('.bg-layer');
+      let cx = innerWidth/2, cy = innerHeight/2;
+      function onMove(e){
+        const x = (e.clientX || (e.touches && e.touches[0].clientX) || cx) - cx;
+        const y = (e.clientY || (e.touches && e.touches[0].clientY) || cy) - cy;
+        const mx = (x / cx) * 0.6; const my = (y / cy) * 0.4;
+        bg.style.transform = `translate(${mx}px, ${my}px) scale(1.01)`;
+      }
+      addEventListener('mousemove', onMove);
+      addEventListener('touchmove', onMove, {passive:true});
+      addEventListener('mouseleave', ()=> bg.style.transform = 'translate(0,0) scale(1)');
+    })();
+
+    // ========== Procedural ambient background (WebAudio) ==========
+    (function(){
+      let audioCtx, masterGain, oscillator1, oscillator2, noiseNode;
+      let playing = false;
+      const toggle = document.getElementById('audioToggle');
+      const vol = document.getElementById('audioVol');
+
+      function setupAudio(){
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGain = audioCtx.createGain();
+        masterGain.gain.value = +vol.value;
+        masterGain.connect(audioCtx.destination);
+
+        // two slow pad oscillators
+        oscillator1 = audioCtx.createOscillator();
+        oscillator1.type = 'sine';
+        oscillator1.frequency.value = 110; // low
+        const g1 = audioCtx.createGain(); g1.gain.value = 0.02;
+        oscillator1.connect(g1); g1.connect(masterGain);
+
+        oscillator2 = audioCtx.createOscillator();
+        oscillator2.type = 'sine';
+        oscillator2.frequency.value = 220;
+        const g2 = audioCtx.createGain(); g2.gain.value = 0.008;
+        oscillator2.connect(g2); g2.connect(masterGain);
+
+        // gentle noise for atmosphere (filtered)
+        const bufferSize = 2 * audioCtx.sampleRate;
+        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) { output[i] = (Math.random()*2-1)*0.2; }
+        noiseNode = audioCtx.createBufferSource();
+        noiseNode.buffer = noiseBuffer;
+        noiseNode.loop = true;
+        const noiseFilter = audioCtx.createBiquadFilter();
+        noiseFilter.type = 'lowpass';
+        noiseFilter.frequency.value = 800;
+        const nGain = audioCtx.createGain(); nGain.gain.value = 0.02;
+        noiseNode.connect(noiseFilter); noiseFilter.connect(nGain); nGain.connect(masterGain);
+
+        // subtle slow detune LFOs
+        const lfo = audioCtx.createOscillator(); lfo.frequency.value = 0.07;
+        const lfoGain = audioCtx.createGain(); lfoGain.gain.value = 8;
+        lfo.connect(lfoGain);
+        lfoGain.connect(oscillator1.frequency);
+        lfoGain.connect(oscillator2.frequency);
+
+        oscillator1.start();
+        oscillator2.start();
+        noiseNode.start();
+        lfo.start();
+      }
+
+      function startSound(){
+        if(!audioCtx) setupAudio();
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+        playing = true;
+        toggle.innerText = '⏸';
+        toggle.setAttribute('aria-pressed','true');
+      }
+      function stopSound(){
+        if(audioCtx && audioCtx.state !== 'closed') audioCtx.suspend();
+        playing = false;
+        toggle.innerText = '▶';
+        toggle.setAttribute('aria-pressed','false');
+      }
+
+      toggle.addEventListener('click', ()=>{
+        if(!playing){ startSound(); } else { stopSound(); }
+      });
+
+      vol.addEventListener('input', ()=> {
+        if(masterGain) masterGain.gain.value = +vol.value;
+      });
+
+      // start autoplay muted on interaction (most browsers require gesture)
+      document.addEventListener('click', function once(){ startSound(); setTimeout(stopSound, 50); document.removeEventListener('click', once); }, {once:true});
+    })();
+
+    // small UX: CTA contact opens a modal-lite
+    (function(){
+      const cta = document.getElementById('cta-contact');
+      cta.addEventListener('click', function(e){
+        e.preventDefault();
+        const modal = document.createElement('div');
+        modal.style.position='fixed';modal.style.inset=0;modal.style.background='rgba(0,0,0,0.6)';modal.style.display='flex';modal.style.alignItems='center';modal.style.justifyContent='center';modal.style.zIndex=2100;
+        modal.innerHTML = `
+          <div style="max-width:520px;width:92%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;backdrop-filter:blur(8px);color: #f3f4f6;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+              <div style="font-weight:800">ارتباط سریع</div>
+              <button id="closeModal" style="background:none;border:none;color:var(--muted);font-weight:700;cursor:pointer">بستن</button>
+            </div>
+            <p style="color:var(--muted);margin-top:10px">برای تماس مستقیم از دکمه‌های زیر استفاده کنید:</p>
+            <div style="display:flex;gap:10px;margin-top:12px">
+              <a class="btn gold" href="https://t.me/mohammadaminfxx" target="_blank">پیام در تلگرام</a>
+              <a class="btn" href="https://instagram.com/mohammadamin.fx" target="_blank">پیام در اینستاگرام</a>
+            </div>
+          </div>`;
+        document.body.appendChild(modal);
+        modal.querySelector('#closeModal').addEventListener('click', ()=> modal.remove());
+        modal.addEventListener('click', (ev)=>{ if(ev.target===modal) modal.remove(); });
+      });
+    })();
+
+    // small accessibility: update year
+    document.addEventListener('DOMContentLoaded', ()=> {
+      const footer = document.querySelector('footer');
+      if(footer) footer.innerHTML = `© ${new Date().getFullYear()} Mohammad Amin Esmaeili — All Rights Reserved`;
+    });
+
   </script>
 </body>
 </html>
