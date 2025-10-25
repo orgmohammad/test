@@ -158,15 +158,7 @@
 
     footer{margin-top:40px;color:var(--muted);text-align:center;position:relative;z-index:2;padding-bottom:60px}
 
-    /* mini audio control */
-    .audio-control{
-      position:fixed;left:18px;bottom:18px;z-index:1300;display:flex;align-items:center;gap:10px;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(255,255,255,0.02));padding:8px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);backdrop-filter: blur(6px);
-    }
-    .audio-btn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,0.04)}
-    .audio-range{width:110px}
-  </style>
-</head>
-<body>
+  
   <!-- Cinematic background + particles -->
   <div class="bg-layer animate" aria-hidden="true"></div>
   <div class="bg-gradient" aria-hidden="true"></div>
@@ -513,58 +505,7 @@
       addEventListener('mouseleave', ()=> bg.style.transform = 'translate(0,0) scale(1)');
     })();
 
-    // ========== Procedural ambient background (WebAudio) ==========
-    (function(){
-      let audioCtx, masterGain, oscillator1, oscillator2, noiseNode;
-      let playing = false;
-      const toggle = document.getElementById('audioToggle');
-      const vol = document.getElementById('audioVol');
-
-      function setupAudio(){
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        masterGain = audioCtx.createGain();
-        masterGain.gain.value = +vol.value;
-        masterGain.connect(audioCtx.destination);
-
-        // two slow pad oscillators
-        oscillator1 = audioCtx.createOscillator();
-        oscillator1.type = 'sine';
-        oscillator1.frequency.value = 110; // low
-        const g1 = audioCtx.createGain(); g1.gain.value = 0.02;
-        oscillator1.connect(g1); g1.connect(masterGain);
-
-        oscillator2 = audioCtx.createOscillator();
-        oscillator2.type = 'sine';
-        oscillator2.frequency.value = 220;
-        const g2 = audioCtx.createGain(); g2.gain.value = 0.008;
-        oscillator2.connect(g2); g2.connect(masterGain);
-
-        // gentle noise for atmosphere (filtered)
-        const bufferSize = 2 * audioCtx.sampleRate;
-        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) { output[i] = (Math.random()*2-1)*0.2; }
-        noiseNode = audioCtx.createBufferSource();
-        noiseNode.buffer = noiseBuffer;
-        noiseNode.loop = true;
-        const noiseFilter = audioCtx.createBiquadFilter();
-        noiseFilter.type = 'lowpass';
-        noiseFilter.frequency.value = 800;
-        const nGain = audioCtx.createGain(); nGain.gain.value = 0.02;
-        noiseNode.connect(noiseFilter); noiseFilter.connect(nGain); nGain.connect(masterGain);
-
-        // subtle slow detune LFOs
-        const lfo = audioCtx.createOscillator(); lfo.frequency.value = 0.07;
-        const lfoGain = audioCtx.createGain(); lfoGain.gain.value = 8;
-        lfo.connect(lfoGain);
-        lfoGain.connect(oscillator1.frequency);
-        lfoGain.connect(oscillator2.frequency);
-
-        oscillator1.start();
-        oscillator2.start();
-        noiseNode.start();
-        lfo.start();
-      }
+  
 
       function startSound(){
         if(!audioCtx) setupAudio();
