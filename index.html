@@ -52,7 +52,7 @@
     .pxr-mark{font-family:Inter, sans-serif;font-weight:900;font-size:54px;letter-spacing:6px;color:var(--gold);text-shadow:0 6px 30px rgba(212,175,55,0.12);}
 
     .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s;text-decoration:none;color:inherit}
     .btn:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.6)}
     .btn.gold{background:linear-gradient(90deg,var(--gold),#ffd66b);color:var(--black);font-weight:700}
 
@@ -150,7 +150,7 @@
           <div class="links-grid" aria-hidden="false">
             <div class="link-card">
               <div style="font-weight:700">اینستاگرام</div>
-              <div class="muted">@mohammadamin_fx</div>
+              <div class="muted">@mohammadamin.fx</div>
             </div>
             <a class="link-card" href="https://t.me/mohammadaminfxx" target="_blank" rel="noopener noreferrer">
               <div style="font-weight:700">تلگرام</div>
@@ -161,7 +161,6 @@
         </div>
 
         <aside class="side-panel" aria-hidden="false">
-          <!-- تصویر هدر از لینک شما (raw.githubusercontent.com) -->
           <img id="hero-image" src="https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-22_10-57-52.jpg" alt="PXR header image">
           <div class="side-overlay">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
@@ -200,11 +199,10 @@
     </main>
 
     <footer>
-      © <span id="year"></span> Mohammad Amin — PXR · همه حقوق محفوظ است.
+      © 2025 Mohammad Amin Esmaeili — All Rights Reserved
     </footer>
   </div>
 
-  <!-- شناورهای تماس سریع -->
   <div class="sticky-cta" aria-hidden="false">
     <a class="bubble insta pulse" href="https://instagram.com/mohammadamin_fx" target="_blank" rel="noopener noreferrer" title="اینستاگرام">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -220,102 +218,111 @@
   </div>
 
   <script>
-    // -----------------------------
-    // CONFIGURE IMAGES (استفاده از لینک‌های raw گیت‌هاب شما)
     const headerImageURL = "https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-22_10-57-52.jpg";
     const backgroundImageURL = "https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-25_06-29-40.jpg";
 
-    (function(){
-      const img = document.getElementById('hero-image');
-      if (headerImageURL) img.src = headerImageURL;
-      if (backgroundImageURL){
-        document.body.style.background = `linear-gradient(180deg, rgba(5,5,7,0.92), rgba(7,16,41,0.92)), url(${backgroundImageURL}) center/cover fixed no-repeat`;
-      }
-    })();
-
-    // translations for 3 languages (fa / en / ar)
-    const text = {
-      fa: {
-        pxr: 'PXR',
-        heroTitle: 'سبک معاملاتی PXR — پیشرو در تحلیل و مدیریت ریسک',
-        heroSub: 'سیستمی ساختاریافته برای معاملات هوشمند و مدیریت سرمایه. راهکارهایی عملی، دقیق و قابل اتکا — مناسب بازارهای بین‌المللی.',
-        aboutTitle: 'درباره PXR',
-        aboutText: '',
-        meText: 'من Mohammad Amin، بنیان‌گذار سبک PXR هستم. تمرکز من روی طراحی سیستم‌های معاملاتی با کمترین دراودان ممکن و بیشترین شفافیت عملکرد است.'
+    const translations = {
+      fa:{
+        heroTitle: "سبک معاملاتی PXR — پیشرو در تحلیل و مدیریت ریسک",
+        heroSub: "سیستمی ساختاریافته برای معاملات هوشمند و مدیریت سرمایه. راهکارهایی عملی، دقیق و قابل‌اتکا — مناسب بازارهای بین‌المللی.",
+        ctaLearn: "معرفی سبک PXR",
+        ctaContact: "ارتباط سریع",
+        aboutTitle: "درباره PXR",
+        aboutText: `من محمد امین اسماعیلی هستم — بنیان‌گذار سبک معاملاتی PXR.
+        بیش از ۳ سال تجربه در بازار فارکس دارم و در طول این مسیر، با تحقیق، آزمون و ترکیب چندین سبک تحلیلی مختلف، توانستم سیستمی منحصر‌به‌فرد طراحی کنم که نتیجه‌ی ادغام سه مکتب اصلی بازار است:
+        Smart Money + ICT + Liquidity Insight
+        <br><br>
+        PXR حاصل ترکیب نقاط قوت هر سه سبک است، اما با یک تفاوت بزرگ:
+        ما همهٔ این مفاهیم پیچیده را به الگوهای ساده، کاربردی و قابل‌درک تبدیل کرده‌ایم تا هر معامله‌گر بتواند بدون نیاز به سال‌ها تجربه، دقیق و با منطق وارد بازار شود.
+        <br><br>
+        به عنوان مثال، در PXR حتی از ساده‌ترین مفاهیم کلاسیک مثل خط روند (Trendline) استفاده می‌کنیم، اما به شکلی عمیق‌تر و هدفمندتر.
+        شما یاد می‌گیرید که با ترند‌لاین اختصاصی سبک PXR، پس از شکست، وارد معامله شوید و نسبت ریسک به ریوارد (R/R) بالای ۶ یا حتی بیشتر به دست آورید.
+        در حالی که شاید ظاهر حرکت فقط یک «شکست روند» ساده باشد، اما در واقع در پشت‌صحنهٔ آن، یک MSS شکل گرفته و قیمت در حال واکنش به یک Order Block دقیق است.
+        <br><br>
+        یعنی شما بدون نیاز به تحلیل‌های سنگین و زمان‌بر، در واقع دارید بر پایهٔ ساختارهای هوشمند بازار و نقدینگی معامله می‌کنید — فقط با استفاده از الگوهای ساده و منسجم.
+        <br><br>
+        من با سبک PXR، تمام مسیر سه‌سالهٔ تجربه، آزمون و خطا و یادگیری خودم را در قالب یک سیستم آموزشی سه‌ماهه خلاصه کرده‌ام.
+        تا شما بدون سردرگمی و اتلاف وقت، مستقیماً به مرحلهٔ درک و سودآوری منطقی برسید.`,
+        meText:`من محمد امین اسماعیلی هستم؛ تریدر در بازار فارکس با بیش از سه سال تجربه‌ی مستمر در این حوزه.
+        در طول این مسیر، با تلاش و پشتکار توانسته‌ام استراتژی و سبک شخصی‌سازی‌شدهٔ خودم را توسعه بدهم؛ سبکی که متناسب با شخصیت و دیدگاه من در بازار است و به من کمک می‌کند معاملاتم را با مدیریت ریسک و نظم بالا پیش ببرم.
+        <br><br>
+        علاوه بر فعالیت در بازار، به عنوان مدرس و منتور نیز تجربه دارم و علاقه‌مندم دانش و تجربیاتم را در اختیار دیگران قرار دهم تا مسیر یادگیری آن‌ها سریع‌تر و مطمئن‌تر طی شود. باور دارم موفقیت در بازارهای مالی تنها با ترکیبی از دانش، تمرین و ذهنیت درست به دست می‌آید.`
       },
-      en: {
-        pxr: 'PXR',
-        heroTitle: 'PXR Trading Method — Advanced Risk & Order Management',
-        heroSub: 'A structured system for smart trading and capital management. Practical, precise and reliable — built for international markets.',
-        aboutTitle: 'About PXR',
-        aboutText: '',
-        meText: 'I am Mohammad Amin, founder of PXR. My focus is designing trading systems with minimal drawdown and maximum transparency of performance.'
+      en:{
+        heroTitle: "PXR Trading Style — Leading in Analysis & Risk Management",
+        heroSub: "A structured system for smart trading and capital management. Practical, precise, and reliable solutions — perfect for global markets.",
+        ctaLearn: "Discover PXR Style",
+        ctaContact: "Quick Contact",
+        aboutTitle: "About PXR",
+        aboutText:`I am Mohammad Amin Esmaeili — founder of the PXR trading style.
+        With over 3 years of experience in the Forex market, I have researched, tested, and combined multiple analytical approaches to create a unique system merging three main market philosophies:
+        Smart Money + ICT + Liquidity Insight
+        <br><br>
+        PXR blends the strengths of these styles with a major difference:
+        We simplify complex concepts into actionable, clear patterns so that any trader can enter the market logically and confidently without years of experience.
+        <br><br>
+        For example, in PXR we even use basic classical concepts like Trendlines, but in a deeper, more strategic way.
+        You learn to enter trades with the PXR-specific trendline after a breakout, achieving a risk/reward (R/R) ratio of 6 or higher.
+        While it may look like a simple trend break, behind the scenes an MSS is formed and the price reacts to a precise Order Block.
+        <br><br>
+        This means you trade based on smart market structures and liquidity patterns using simple and coherent strategies — without heavy analysis.
+        <br><br>
+        With PXR, I have condensed my 3-year experience, trial & error, and learning into a three-month educational system so that you can directly reach logical understanding and profitability without wasting time.`,
+        meText:`I am Mohammad Amin Esmaeili; a Forex trader with over three years of continuous experience.
+        I have developed a personalized trading strategy that suits my personality and market perspective, helping me trade with high discipline and risk management.
+        <br><br>
+        Besides trading, I am also an educator and mentor, eager to share my knowledge and experiences to accelerate and improve the learning paths of others. I believe success in financial markets comes from a mix of knowledge, practice, and the right mindset.`
       },
-      ar: {
-        pxr: 'PXR',
-        heroTitle: 'أسلوب التداول PXR — إدارة مخاطرة متقدمة',
-        heroSub: 'نظام منظم للتداول الذكي وإدارة رأس المال. عملي ودقيق وموثوق — مصمم للأسواق الدولية.',
-        aboutTitle: 'عن PXR',
-        aboutText: '',
-        meText: 'أنا Mohammad Amin، مؤسس PXR. تركيزي تصميم أنظمة تداول ذات خسائر دنيا وشفافية عالية في الأداء.'
+      ar:{
+        heroTitle: "أسلوب التداول PXR — رائد في التحليل وإدارة المخاطر",
+        heroSub: "نظام منظم للتداول الذكي وإدارة رأس المال. حلول عملية ودقيقة وموثوقة — مناسبة للأسواق العالمية.",
+        ctaLearn: "تعرف على أسلوب PXR",
+        ctaContact: "اتصال سريع",
+        aboutTitle: "حول PXR",
+        aboutText:`أنا محمد أمين إسماعيلي — مؤسس أسلوب التداول PXR.
+        مع أكثر من 3 سنوات من الخبرة في سوق الفوركس، قمت بالبحث والاختبار ودمج عدة أساليب تحليلية لإنشاء نظام فريد يجمع بين ثلاث فلسفات رئيسية في السوق:
+        Smart Money + ICT + Liquidity Insight
+        <br><br>
+        PXR يجمع نقاط القوة لهذه الأساليب مع فرق كبير:
+        نحن نبسط المفاهيم المعقدة إلى أنماط واضحة وقابلة للتطبيق حتى يتمكن أي متداول من دخول السوق بثقة ومنطقية دون الحاجة لسنوات من الخبرة.
+        <br><br>
+        على سبيل المثال، في PXR نستخدم حتى المفاهيم الكلاسيكية البسيطة مثل خطوط الاتجاه، ولكن بطريقة أعمق وأكثر استراتيجية.
+        ستتعلم كيفية الدخول في التداول باستخدام خط الاتجاه الخاص بـ PXR بعد كسر، وتحقيق نسبة المخاطرة/المكافأة (R/R) 6 أو أكثر.
+        بينما قد يبدو الأمر مجرد كسر اتجاه بسيط، إلا أنه في الواقع يتشكل MSS ويستجيب السعر لكتلة أوامر دقيقة.
+        <br><br>
+        هذا يعني أنك تتداول استنادًا إلى هياكل السوق الذكية وأنماط السيولة باستخدام استراتيجيات بسيطة ومتناسقة — دون الحاجة إلى تحليل ثقيل.
+        <br><br>
+        مع PXR، لقد لخصت خبرتي لمدة 3 سنوات والتجربة والخطأ والتعلم في نظام تعليمي مدته ثلاثة أشهر بحيث يمكنك الوصول مباشرة إلى الفهم المنطقي والربحية دون إضاعة الوقت.`,
+        meText:`أنا محمد أمين إسماعيلي؛ متداول في سوق الفوركس مع أكثر من ثلاث سنوات من الخبرة المستمرة.
+        خلال هذه الفترة، طورت استراتيجية تداول مخصصة تناسب شخصيتي ورؤيتي للسوق، مما يساعدني على التداول بالانضباط وإدارة المخاطر بشكل عالي.
+        <br><br>
+        بالإضافة إلى التداول، أنا أيضًا مدرس ومرشد، وأسعى لمشاركة معرفتي وخبرتي لتسريع وتحسين مسارات التعلم للآخرين. أؤمن أن النجاح في الأسواق المالية يتحقق من خلال مزيج من المعرفة والممارسة والعقلية الصحيحة.`
       }
     };
 
-    // language switcher
-    const langs = document.querySelectorAll('.lang');
-    function setLang(code){
-      const t = text[code] || text.fa;
-      document.getElementById('pxr-title').innerText = t.pxr;
-      document.getElementById('hero-title').innerText = t.heroTitle;
-      document.getElementById('hero-sub').innerText = t.heroSub;
-      document.getElementById('about-title').innerText = t.aboutTitle;
-      // about-text and me-text are long Persian strings already in HTML; change only basic labels
-      document.getElementById('me-text').innerText = (code === 'fa') ? `من محمد امین اسماعیلی هستم؛ تریدر در بازار فارکس با بیش از سه سال تجربه‌ی مستمر در این حوزه. در طول این مسیر، با تلاش و پشتکار توانسته‌ام استراتژی و سبک شخصی‌سازی‌شده‌ی خودم را توسعه بدهم؛ سبکی که متناسب با شخصیت و دیدگاه من در بازار است و به من کمک می‌کند معاملاتم را با مدیریت ریسک و نظم بالا پیش ببرم.\n\nعلاوه بر فعالیت در بازار، به عنوان مدرس و منتور نیز تجربه دارم و علاقه‌مندم دانش و تجربیاتم را در اختیار دیگران قرار دهم تا مسیر یادگیری آن‌ها سریع‌تر و مطمئن‌تر طی شود. باور دارم موفقیت در بازارهای مالی تنها با ترکیبی از دانش، تمرین و ذهنیت درست به دست می‌آید.` : t.meText || t.meText;
-      const dir = (code === 'en') ? 'ltr' : 'rtl';
-      document.documentElement.lang = code;
-      document.body.dir = dir;
-      langs.forEach(el => el.classList.toggle('active', el.dataset.lang===code));
-      const content = document.getElementById('content-area');
-      if(dir==='ltr'){ content.classList.remove('dir-rtl'); content.classList.add('dir-ltr'); }
-      else{ content.classList.remove('dir-ltr'); content.classList.add('dir-rtl'); }
-    }
+    const langElements = document.querySelectorAll(".lang");
+    const contentMap = {
+      "hero-head": "heroTitle",
+      "hero-sub": "heroSub",
+      "cta-learn": "ctaLearn",
+      "cta-contact": "ctaContact",
+      "about-title": "aboutTitle",
+      "about-text": "aboutText",
+      "me-text": "meText"
+    };
 
-    langs.forEach(el => el.addEventListener('click', ()=> setLang(el.dataset.lang)));
-
-    // initial
-    setLang('fa');
-    document.getElementById('year').innerText = new Date().getFullYear();
-
-    // contact CTA behavior (animated modal-lite)
-    document.getElementById('cta-contact').addEventListener('click', function(e){
-      e.preventDefault();
-      const modal = document.createElement('div');
-      modal.style.position='fixed';modal.style.inset=0;modal.style.background='rgba(0,0,0,0.6)';modal.style.display='flex';modal.style.alignItems='center';modal.style.justifyContent='center';modal.style.zIndex=2000;
-      modal.innerHTML = `
-        <div style="max-width:520px;width:92%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;backdrop-filter:blur(6px)">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-            <div style="font-weight:800">ارتباط سریع</div>
-            <button id="closeModal" style="background:none;border:none;color:var(--muted);font-weight:700;cursor:pointer">بستن</button>
-          </div>
-          <p class="muted" style="margin-top:8px">برای تماس مستقیم از دکمه‌های زیر استفاده کن یا در اینستاگرام/تلگرام پیام بفرست.</p>
-          <div style="display:flex;gap:10px;margin-top:12px">
-            <a class="btn gold" href="https://t.me/mohammadaminfxx" target="_blank">پیام در تلگرام</a>
-            <a class="btn" href="https://instagram.com/mohammadamin_fx" target="_blank">پیام در اینستاگرام</a>
-          </div>
-        </div>`;
-      document.body.appendChild(modal);
-      modal.querySelector('#closeModal').addEventListener('click', ()=> modal.remove());
-      modal.addEventListener('click', (ev)=>{ if(ev.target===modal) modal.remove(); });
-    });
-
-    // tiny entrance animations
-    window.addEventListener('load', ()=>{
-      document.querySelectorAll('.hero-card, .side-panel, .about').forEach((el,i)=>{
-        el.style.opacity=0;el.style.transform='translateY(18px)';el.style.transition='opacity .7s ease .1s, transform .7s cubic-bezier(.2,.9,.3,1) .1s';
-        setTimeout(()=>{el.style.opacity=1;el.style.transform='translateY(0)';}, 120*i+80);
+    langElements.forEach(el=>{
+      el.addEventListener("click", ()=>{
+        langElements.forEach(l=>l.classList.remove("active"));
+        el.classList.add("active");
+        const lang = el.dataset.lang;
+        for(const id in contentMap){
+          const key = contentMap[id];
+          document.getElementById(id).innerHTML = translations[lang][key];
+        }
+        document.getElementById("content-area").className = lang==="en"?"dir-ltr":"dir-rtl";
       });
     });
-
   </script>
 </body>
 </html>
