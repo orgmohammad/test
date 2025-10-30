@@ -1,646 +1,153 @@
-<!doctype html>
-<html lang="fa" dir="rtl">
+<!DOCTYPE html>
+<html lang="fa">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PXR — سبک معاملاتی</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-  <meta name="description" content="PXR — سبک معاملاتی؛ بنیان‌گذار: Mohammad Amin. وب‌سایت رسمی، اطلاعات و ارتباطات." />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forex Pro Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    :root{
-      --bg-dark:#050507;
-      --black:#0b0b0b;
-      --gold:#d4af37;
-      --muted:#9aa3ad;
-      --glass: rgba(255,255,255,0.03);
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
     }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: 'Vazirmatn', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
-      color: #f3f4f6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.6;
-      overflow-x:hidden;
-      background: linear-gradient(180deg,var(--bg-dark), #071029 120%);
-      position:relative;
+    h1 {
+      font-size: 2rem;
+      margin: 10px 0 20px;
+      color: #38bdf8;
+      letter-spacing: 1px;
     }
-
-    /* ---------- Animated cinematic background (image + gradient) ---------- */
-    .bg-layer {
-      position: fixed;
-      inset: 0;
-      z-index: -3;
-      background: url('https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-25_06-29-40.jpg') center/cover no-repeat fixed;
-      transform-origin: center;
-      transition: transform 12s linear, filter 10s linear;
-      will-change: transform, filter;
-      filter: brightness(.85) contrast(1.02);
+    #chartContainer {
+      background: #1e293b;
+      border-radius: 16px;
+      padding: 20px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 0 20px rgba(56,189,248,0.3);
     }
-    .bg-gradient {
-      position: fixed; inset:0; z-index:-2;
-      background: linear-gradient(180deg, rgba(7,7,10,0.66), rgba(7,16,41,0.66));
-      pointer-events:none;
+    table {
+      width: 90%;
+      max-width: 800px;
+      margin-top: 30px;
+      border-collapse: collapse;
+      background: #1e293b;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(56,189,248,0.15);
     }
-    /* subtle slow movement for cinematic feel */
-    @keyframes bgShift {
-      0%{ transform: scale(1) translateY(0px); filter: brightness(.9) blur(0px); }
-      50%{ transform: scale(1.02) translateY(-8px); filter: brightness(1.06) blur(1px); }
-      100%{ transform: scale(1) translateY(0px); filter: brightness(.9) blur(0px); }
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
     }
-    .bg-layer.animate { animation: bgShift 40s ease-in-out infinite; }
-
-    /* particles canvas on top of bg */
-    #particles {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      pointer-events: none;
-      mix-blend-mode: screen;
-      opacity: .55;
+    th {
+      background: #334155;
+      color: #a5f3fc;
     }
-
-    .wrap{max-width:1200px;margin:0 auto;padding:28px;position:relative;z-index:2}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .brand{display:flex;gap:14px;align-items:center}
-
-    .logo{
-      width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#ffd66b);display:flex;align-items:center;justify-content:center;font-weight:900;color:var(--black);font-family:Inter, sans-serif;font-size:20px;letter-spacing:2px;box-shadow:0 6px 20px rgba(212,175,55,0.35);transform:translateZ(0);
-      position:relative; overflow:visible;
+    tr:nth-child(even) {
+      background: #273449;
     }
-    /* sparkle overlay on logo */
-    .logo::after{
-      content:"";
-      position:absolute; inset:-8px;
-      border-radius:16px;
-      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.15), transparent 8%),
-                  radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08), transparent 12%);
-      mix-blend-mode: overlay;
-      opacity:0.85;
-      pointer-events:none;
-      transform: translateZ(0);
-      transition: opacity .8s ease;
+    tr:hover {
+      background: #334155;
+      transition: 0.2s;
     }
-    .logo.glow{ box-shadow:0 12px 40px rgba(212,175,55,0.35), 0 2px 8px rgba(0,0,0,.6); transform: translateY(-1px) scale(1.02);}
-
-    nav{display:flex;gap:12px;align-items:center}
-    .lang-switch{display:flex;gap:8px}
-    .lang{cursor:pointer;padding:8px 10px;border-radius:8px;background:var(--glass);font-weight:700;transition:all .3s}
-    .lang.active{background:linear-gradient(90deg,var(--gold),#ffd66b);color:var(--black)}
-
-    .hero{
-      margin-top:26px;display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:center
+    footer {
+      margin-top: auto;
+      font-size: 0.85rem;
+      color: #64748b;
+      padding: 10px;
     }
-
-    .hero-card{padding:28px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(6px);box-shadow:0 10px 30px rgba(2,6,23,0.6);transform:translateY(0);opacity:1;transition:all .7s cubic-bezier(.2,.9,.3,1)}
-    .hero-card.revealed{ transform:translateY(0); opacity:1; }
-    h1{margin:0;font-size:34px}
-    p.lead{color:var(--muted);margin-top:10px;font-size:15px}
-
-    .pxr-mark{font-family:Inter, sans-serif;font-weight:900;font-size:54px;letter-spacing:6px;color:var(--gold);text-shadow:0 6px 30px rgba(212,175,55,0.18);display:inline-block;position:relative;overflow:visible}
-    /* subtle glitter sweep on pxr */
-    .pxr-mark::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(90deg, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.35) 45%, rgba(255,255,255,0.0) 70%);
-      transform: translateX(-120%);
-      transition: transform 1.2s ease;
-      pointer-events:none;
-      mix-blend-mode: overlay;
-    }
-    .pxr-mark.sweep::after{ transform: translateX(120%); }
-
-    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:all .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s;text-decoration:none;color:inherit}
-    .btn:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 18px 50px rgba(2,6,23,0.6)}
-    .btn.gold{background:linear-gradient(90deg,var(--gold),#ffd66b);color:var(--black);font-weight:700;box-shadow:0 8px 30px rgba(212,175,55,0.12);}
-
-    .side-panel{position:relative;height:420px;border-radius:14px;overflow:hidden;transition:transform .8s ease}
-    .side-panel img{width:100%;height:100%;object-fit:cover;transform:scale(1.03);transition:transform 12s linear}
-    .side-panel:hover img{transform:scale(1.12) rotate(0.2deg)}
-    .side-overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.12), rgba(0,0,0,0.5));display:flex;flex-direction:column;justify-content:flex-end;padding:18px}
-
-    .about{margin-top:18px;padding:20px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));}
-    .muted{color:var(--muted)}
-
-    .sticky-cta{position:fixed;right:18px;bottom:18px;display:flex;flex-direction:column;gap:12px;z-index:1200}
-    .bubble{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(2,6,23,0.6);cursor:pointer;transition:all .3s}
-    .bubble.gold{background:linear-gradient(90deg,var(--gold),#ffd66b);color:var(--black)}
-    .bubble.insta{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03));color:var(--gold);border:1px solid rgba(255,255,255,0.04)}
-
-    .dir-ltr{direction:ltr;text-align:left}
-    .dir-rtl{direction:rtl;text-align:right}
-
-    @media (max-width:980px){
-      .hero{grid-template-columns:1fr}
-      .side-panel{height:320px}
-      header{flex-direction:column;align-items:flex-start;gap:12px}
-      .wrap{padding:18px}
-    }
-
-    .sparkles{position:absolute;inset:auto 0 0 0;pointer-events:none;height:120px}
-    .glow{position:absolute;width:280px;height:280px;border-radius:50%;filter:blur(60px);opacity:.08}
-
-    @keyframes floaty {0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
-    .float{animation:floaty 6s ease-in-out infinite}
-
-    @keyframes pulse {0%{transform:scale(1)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
-    .pulse{animation:pulse 2.6s ease-in-out infinite}
-
-    .links-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
-    .link-card{padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;gap:10px;cursor:pointer;transition:transform .22s}
-    .link-card:hover{transform:translateY(-6px) scale(1.02)}
-
-    footer{margin-top:40px;color:var(--muted);text-align:center;position:relative;z-index:2;padding-bottom:60px}
-
-    /* mini audio control */
-    .audio-control{
-      position:fixed;left:18px;bottom:18px;z-index:1300;display:flex;align-items:center;gap:10px;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(255,255,255,0.02));padding:8px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);backdrop-filter: blur(6px);
-    }
-    .audio-btn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,0.04)}
-    .audio-range{width:110px}
   </style>
 </head>
 <body>
-  <!-- Cinematic background + particles -->
-  <div class="bg-layer animate" aria-hidden="true"></div>
-  <div class="bg-gradient" aria-hidden="true"></div>
-  <canvas id="particles" aria-hidden="true"></canvas>
+  <h1>💹 Forex Pro Dashboard</h1>
 
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo" id="logoEl">PXR</div>
-        <div>
-          <div style="font-weight:800">PXR — سبک معاملاتی</div>
-          <div class="muted small">بنیان‌گذار: Mohammad Amin</div>
-        </div>
-      </div>
-
-      <nav class="dir-rtl">
-        <div class="lang-switch" role="tablist" aria-label="انتخاب زبان">
-          <div class="lang active" data-lang="fa">فارسی</div>
-          <div class="lang" data-lang="en">EN</div>
-          <div class="lang" data-lang="ar">العربية</div>
-        </div>
-      </nav>
-    </header>
-
-    <main>
-      <section class="hero">
-        <div class="hero-card dir-rtl" id="content-area">
-          <div class="pxr-mark" id="pxr-title">PXR</div>
-          <h1 id="hero-head"><span id="hero-title">سبک معاملاتی PXR — پیشرو در تحلیل و مدیریت ریسک</span></h1>
-          <p class="lead" id="hero-sub">سیستمی ساختاریافته برای معاملات هوشمند و مدیریت سرمایه. راهکارهایی عملی، دقیق و قابل‌اتکا — مناسب بازارهای بین‌المللی.</p>
-
-          <div class="actions">
-            <a class="btn gold" id="cta-learn" href="#about" role="button">معرفی سبک PXR</a>
-            <a class="btn" id="cta-contact" href="#" role="button">ارتباط سریع</a>
-          </div>
-
-          <div class="about" id="about">
-            <div style="font-weight:700;margin-bottom:8px" id="about-title">درباره PXR</div>
-            <div id="about-text" class="muted">
-              من محمد امین اسماعیلی هستم — بنیان‌گذار سبک معاملاتی PXR.
-              بیش از ۳ سال تجربه در بازار فارکس دارم و در طول این مسیر، با تحقیق، آزمون و ترکیب چندین سبک تحلیلی مختلف، توانستم سیستمی منحصر‌به‌فرد طراحی کنم که نتیجه‌ی ادغام سه مکتب اصلی بازار است:
-              <strong>Smart Money + ICT + Liquidity Insight</strong>
-              <br><br>
-              PXR حاصل ترکیب نقاط قوت هر سه سبک است، اما با یک تفاوت بزرگ:
-              ما همهٔ این مفاهیم پیچیده را به الگوهای ساده، کاربردی و قابل‌درک تبدیل کرده‌ایم تا هر معامله‌گر بتواند بدون نیاز به سال‌ها تجربه، دقیق و با منطق وارد بازار شود.
-              <br><br>
-              به عنوان مثال، در PXR حتی از ساده‌ترین مفاهیم کلاسیک مثل خط روند (Trendline) استفاده می‌کنیم، اما به شکلی عمیق‌تر و هدفمندتر.
-              شما یاد می‌گیرید که با ترند‌لاین اختصاصی سبک PXR، پس از شکست، وارد معامله شوید و نسبت ریسک به ریوارد (R/R) بالای ۶ یا حتی بیشتر به دست آورید.
-              در حالی که شاید ظاهر حرکت فقط یک «شکست روند» ساده باشد، اما در واقع در پشت‌صحنهٔ آن، یک MSS شکل گرفته و قیمت در حال واکنش به یک Order Block دقیق است.
-              <br><br>
-              یعنی شما بدون نیاز به تحلیل‌های سنگین و زمان‌بر، در واقع دارید بر پایهٔ ساختارهای هوشمند بازار و نقدینگی معامله می‌کنید — فقط با استفاده از الگوهای ساده و منسجم.
-              <br><br>
-              من با سبک PXR، تمام مسیر سه‌سالهٔ تجربه، آزمون و خطا و یادگیری خودم را در قالب یک سیستم آموزشی سه‌ماهه خلاصه کرده‌ام.
-              تا شما بدون سردرگمی و اتلاف وقت، مستقیماً به مرحلهٔ درک و سودآوری منطقی برسید.
-            </div>
-          </div>
-
-          <div class="links-grid" aria-hidden="false">
-            <a class="link-card" href="https://instagram.com/mohammadamin.fx" target="_blank" rel="noopener noreferrer">
-              <div style="font-weight:700">اینستاگرام</div>
-              <div class="muted">@mohammadamin.fx</div>
-            </a>
-            <a class="link-card" href="https://t.me/mohammadaminfxx" target="_blank" rel="noopener noreferrer">
-              <div style="font-weight:700">تلگرام</div>
-              <div class="muted">t.me/mohammadaminfxx</div>
-            </a>
-          </div>
-
-        </div>
-
-        <aside class="side-panel" aria-hidden="false">
-          <img id="hero-image" src="https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-22_10-57-52.jpg" alt="PXR header image">
-          <div class="side-overlay">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
-              <div style="font-weight:700">PXR</div>
-              <div class="muted">بنیان‌گذار: Mohammad Amin</div>
-            </div>
-          </div>
-        </aside>
-      </section>
-
-      <section style="margin-top:22px">
-        <div class="hero-card">
-          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-            <div>
-              <div style="font-weight:800">تماس و ارتباط</div>
-              <div class="muted">برای ارتباط سریع از کلیدهای کناری استفاده کن یا پیام مستقیم در اینستاگرام و تلگرام بفرست.</div>
-            </div>
-            <div style="display:flex;gap:10px;align-items:center">
-              <a class="btn" href="https://instagram.com/mohammadamin.fx" target="_blank" rel="noopener noreferrer">بازدید اینستاگرام</a>
-              <a class="btn" href="https://t.me/mohammadaminfxx" target="_blank" rel="noopener noreferrer">بازدید تلگرام</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="about" style="margin-top:12px">
-          <div style="font-weight:700;margin-bottom:8px">درباره من</div>
-          <div id="me-text" class="muted">
-            من محمد امین اسماعیلی هستم؛ تریدر در بازار فارکس با بیش از سه سال تجربه‌ی مستمر در این حوزه.
-            در طول این مسیر، با تلاش و پشتکار توانسته‌ام استراتژی و سبک شخصی‌سازی‌شده‌ی خودم را توسعه بدهم؛ سبکی که متناسب با شخصیت و دیدگاه من در بازار است و به من کمک می‌کند معاملاتم را با مدیریت ریسک و نظم بالا پیش ببرم.
-            <br><br>
-            علاوه بر فعالیت در بازار، به عنوان مدرس و منتور نیز تجربه دارم و علاقه‌مندم دانش و تجربیاتم را در اختیار دیگران قرار دهم تا مسیر یادگیری آن‌ها سریع‌تر و مطمئن‌تر طی شود. باور دارم موفقیت در بازارهای مالی تنها با ترکیبی از دانش، تمرین و ذهنیت درست به دست می‌آید.
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <footer>
-      © 2025 Mohammad Amin Esmaeili — All Rights Reserved
-    </footer>
+  <div id="chartContainer">
+    <canvas id="fxChart"></canvas>
   </div>
 
-  <div class="sticky-cta" aria-hidden="false">
-    <a class="bubble insta pulse" href="https://instagram.com/mohammadamin.fx" target="_blank" rel="noopener noreferrer" title="اینستاگرام">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-    <a class="bubble gold float" href="https://t.me/mohammadaminfxx" target="_blank" rel="noopener noreferrer" title="تلگرام">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 2L2 11.5l4.5 1.6L10 21l3-2.1 6.9-13.9L22 2z" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
-  </div>
+  <table id="ratesTable">
+    <thead>
+      <tr><th>جفت‌ارز</th><th>نرخ</th></tr>
+    </thead>
+    <tbody id="ratesBody">
+      <tr><td colspan="2">در حال دریافت داده...</td></tr>
+    </tbody>
+  </table>
 
-  <div class="sparkles">
-    <div class="glow" style="right:10%;background:radial-gradient(circle at 30% 30%, rgba(212,175,55,0.9), transparent 30%);top:-20%;transform:translateZ(0)"></div>
-    <div class="glow" style="left:5%;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), transparent 30%);bottom:-10%"></div>
-  </div>
-
-  <!-- Audio control (procedural ambient via WebAudio) -->
-  <div class="audio-control" id="audioControl" aria-hidden="false" title="موسیقی پس‌زمینه">
-    <button class="audio-btn" id="audioToggle" aria-pressed="false" title="پخش / توقف">
-      ▶
-    </button>
-    <input class="audio-range" id="audioVol" type="range" min="0" max="1" step="0.01" value="0.18" aria-label="Volume">
-  </div>
+  <footer>© 2025 Forex Pro Dashboard — ساخته شده با 💙</footer>
 
   <script>
-    // ========== Keep existing translations + language logic (unchanged content) ==========
-    const headerImageURL = "https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-22_10-57-52.jpg";
-    const backgroundImageURL = "https://raw.githubusercontent.com/orgmohammad/test/45c20096a3f4587a55d71f6e73d85b75d4f2cb60/photo_2025-10-25_06-29-40.jpg";
+    const ctx = document.getElementById('fxChart');
+    const pairs = ['EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF'];
+    const base = 'USD';
+    const dataHistory = {};
 
-    const translations = {
-      fa:{
-        heroTitle: "سبک معاملاتی PXR — پیشرو در تحلیل و مدیریت ریسک",
-        heroSub: "سیستمی ساختاریافته برای معاملات هوشمند و مدیریت سرمایه. راهکارهایی عملی، دقیق و قابل‌اتکا — مناسب بازارهای بین‌المللی.",
-        ctaLearn: "معرفی سبک PXR",
-        ctaContact: "ارتباط سریع",
-        aboutTitle: "درباره PXR",
-        aboutText: من محمد امین اسماعیلی هستم — بنیان‌گذار سبک معاملاتی PXR.
-        بیش از ۳ سال تجربه در بازار فارکس دارم و در طول این مسیر، با تحقیق، آزمون و ترکیب چندین سبک تحلیلی مختلف، توانستم سیستمی منحصر‌به‌فرد طراحی کنم که نتیجه‌ی ادغام سه مکتب اصلی بازار است:
-        Smart Money + ICT + Liquidity Insight
-        <br><br>
-        PXR حاصل ترکیب نقاط قوت هر سه سبک است، اما با یک تفاوت بزرگ:
-        ما همهٔ این مفاهیم پیچیده را به الگوهای ساده، کاربردی و قابل‌درک تبدیل کرده‌ایم تا هر معامله‌گر بتواند بدون نیاز به سال‌ها تجربه، دقیق و با منطق وارد بازار شود.
-        <br><br>
-        به عنوان مثال، در PXR حتی از ساده‌ترین مفاهیم کلاسیک مثل خط روند (Trendline) استفاده می‌کنیم، اما به شکلی عمیق‌تر و هدفمندتر.
-        شما یاد می‌گیرید که با ترند‌لاین اختصاصی سبک PXR، پس از شکست، وارد معامله شوید و نسبت ریسک به ریوارد (R/R) بالای ۶ یا حتی بیشتر به دست آورید.
-        در حالی که شاید ظاهر حرکت فقط یک «شکست روند» ساده باشد، اما در واقع در پشت‌صحنهٔ آن، یک MSS شکل گرفته و قیمت در حال واکنش به یک Order Block دقیق است.
-        <br><br>
-        یعنی شما بدون نیاز به تحلیل‌های سنگین و زمان‌بر، در واقع دارید بر پایه‌ی ساختارهای هوشمند بازار و نقدینگی معامله می‌کنید — فقط با استفاده از الگوهای ساده و منسجم.
-        <br><br>
-        من با سبک PXR، تمام مسیر سه‌سالهٔ تجربه، آزمون و خطا و یادگیری خودم را در قالب یک سیستم آموزشی سه‌ماهه خلاصه کرده‌ام.
-        تا شما بدون سردرگمی و اتلاف وقت، مستقیماً به مرحلهٔ درک و سودآوری منطقی برسید.,
-        meText:من محمد امین اسماعیلی هستم؛ تریدر در بازار فارکس با بیش از سه سال تجربه‌ی مستمر در این حوزه.
-        در طول این مسیر، با تلاش و پشتکار توانسته‌ام استراتژی و سبک شخصی‌سازی‌شدهٔ خودم را توسعه بدهم؛ سبکی که متناسب با شخصیت و دیدگاه من در بازار است و به من کمک می‌کند معاملاتم را با مدیریت ریسک و نظم بالا پیش ببرم.
-        <br><br>
-        علاوه بر فعالیت در بازار، به عنوان مدرس و منتور نیز تجربه دارم و علاقه‌مندم دانش و تجربیاتم را در اختیار دیگران قرار دهم تا مسیر یادگیری آن‌ها سریع‌تر و مطمئن‌تر طی شود. باور دارم موفقیت در بازارهای مالی تنها با ترکیبی از دانش، تمرین و ذهنیت درست به دست می‌آید.
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: pairs.map(p => ({
+          label: `${p}/${base}`,
+          data: [],
+          borderWidth: 2,
+          tension: 0.3
+        }))
       },
-      en:{
-        heroTitle: "PXR Trading Style — Leading in Analysis & Risk Management",
-        heroSub: "A structured system for smart trading and capital management. Practical, precise, and reliable solutions — perfect for global markets.",
-        ctaLearn: "Discover PXR Style",
-        ctaContact: "Quick Contact",
-        aboutTitle: "About PXR",
-        aboutText:I am Mohammad Amin Esmaeili — founder of the PXR trading style.
-        With over 3 years of experience in the Forex market, I have researched, tested, and combined multiple analytical approaches to create a unique system merging three main market philosophies:
-        Smart Money + ICT + Liquidity Insight
-        <br><br>
-        PXR blends the strengths of these styles with a major difference:
-        We simplify complex concepts into actionable, clear patterns so that any trader can enter the market logically and confidently without years of experience.
-        <br><br>
-        For example, in PXR we even use basic classical concepts like Trendlines, but in a deeper, more strategic way.
-        You learn to enter trades with the PXR-specific trendline after a breakout, achieving a risk/reward (R/R) ratio of 6 or higher.
-        While it may look like a simple trend break, behind the scenes an MSS is formed and the price reacts to a precise Order Block.
-        <br><br>
-        This means you trade based on smart market structures and liquidity patterns using simple and coherent strategies — without heavy analysis.
-        <br><br>
-        With PXR, I have condensed my 3-year experience, trial & error, and learning into a three-month educational system so that you can directly reach logical understanding and profitability without wasting time.,
-        meText:I am Mohammad Amin Esmaeili; a Forex trader with over three years of continuous experience.
-        I have developed a personalized trading strategy that suits my personality and market perspective, helping me trade with high discipline and risk management.
-        <br><br>
-        Besides trading, I am also an educator and mentor, eager to share my knowledge and experiences to accelerate and improve the learning paths of others. I believe success in financial markets comes from a mix of knowledge, practice, and the right mindset.
-      },
-      ar:{
-        heroTitle: "أسلوب التداول PXR — رائد في التحليل وإدارة المخاطر",
-        heroSub: "نظام منظم للتداول الذكي وإدارة رأس المال. حلول عملية ودقيقة وموثوقة — مناسبة للأسواق العالمية.",
-        ctaLearn: "تعرف على أسلوب PXR",
-        ctaContact: "اتصال سريع",
-        aboutTitle: "حول PXR",
-        aboutText:أنا محمد أمين إسماعيلي — مؤسس أسلوب التداول PXR.
-        مع أكثر من 3 سنوات من الخبرة في سوق الفوركس، قمت بالبحث والاختبار ودمج عدة أساليب تحليلية لإنشاء نظام فريد يجمع بين ثلاث فلسفات رئيسية في السوق:
-        Smart Money + ICT + Liquidity Insight
-        <br><br>
-        PXR يجمع نقاط القوة لهذه الأساليب مع فرق كبير:
-        نحن نبسط المفاهيم المعقدة إلى أنماط واضحة وقابلة للتطبيق حتى يتمكن أي متداول من دخول السوق بثقة ومنطقية دون الحاجة لسنوات من الخبرة.
-        <br><br>
-        على سبيل المثال، في PXR نستخدم حتى المفاهيم الكلاسيكية البسيطة مثل خطوط الاتجاه، ولكن بطريقة أعمق وأكثر استراتيجية.
-        ستتعلم كيفية الدخول في التداول باستخدام خط الاتجاه الخاص بـ PXR بعد كسر، وتحقيق نسبة المخاطرة/المكافأة (R/R) 6 أو أكثر.
-        بينما قد يبدو الأمر مجرد كسر اتجاه بسيط، إلا أنه في الواقع يتشكل MSS ويستجيب السعر لكتلة أوامر دقيقة.
-        <br><br>
-        هذا يعني أنك تتداول استنادًا إلى هياكل السوق الذكية وأنماط السيولة باستخدام استراتيجيات بسيطة ومتناسقة — دون الحاجة إلى تحليل ثقيل.
-        <br><br>
-        مع PXR، لقد لخصت خبرتي لمدة 3 سنوات والتجربة والخطأ والتعلم في نظام تعليمي مدته ثلاثة أشهر بحيث يمكنك الوصول مباشرة إلى الفهم المنطقي والربحية دون إضاعة الوقت.,
-        meText:أنا محمد أمين إسماعيلي؛ متداول في سوق الفوركس مع أكثر من ثلاث سنوات من الخبرة المستمرة.
-        خلال هذه الفترة، طورت استراتيجية تداول مخصصة تناسب شخصيتي ورؤيتي للسوق، مما يساعدني على التداول بالانضباط وإدارة المخاطر بشكل عالي.
-        <br><br>
-        بالإضافة إلى التداول، أنا أيضًا مدرس ومرشد، وأسعى لمشاركة معرفتي وخبرتي لتسريع وتحسين مسارات التعلم للآخرين. أؤمن أن النجاح في الأسواق المالية يتحقق من خلال مزيج من المعرفة والممارسة والعقلية الصحيحة.
-      }
-    };
-
-    // language switching (same UX as original)
-    const langElements = document.querySelectorAll(".lang");
-    const contentMap = {
-      "hero-head": "heroTitle",
-      "hero-sub": "heroSub",
-      "cta-learn": "ctaLearn",
-      "cta-contact": "ctaContact",
-      "about-title": "aboutTitle",
-      "about-text": "aboutText",
-      "me-text": "meText"
-    };
-
-    langElements.forEach(el=>{
-      el.addEventListener("click", ()=>{
-        langElements.forEach(l=>l.classList.remove("active"));
-        el.classList.add("active");
-        const lang = el.dataset.lang;
-        for(const id in contentMap){
-          const key = contentMap[id];
-          const elm = document.getElementById(id);
-          if(elm) elm.innerHTML = translations[lang][key];
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { color: '#f1f5f9' } } },
+        scales: {
+          x: { ticks: { color: '#cbd5e1' } },
+          y: { ticks: { color: '#cbd5e1' } }
         }
-        // direction
-        document.getElementById("content-area").className = lang==="en"?"dir-ltr":"dir-rtl";
-        // small sweep effect on pxr
-        const px = document.querySelector('.pxr-mark');
-        px.classList.remove('sweep');
-        void px.offsetWidth;
-        px.classList.add('sweep');
-      });
+      }
     });
 
-    // set images (in case you want to change via JS)
-    (function(){
-      const img = document.getElementById('hero-image');
-      if (headerImageURL) img.src = headerImageURL;
-      // set bg-layer image (already inline CSS uses same URL but keep script to be robust)
-      const bg = document.querySelector('.bg-layer');
-      if (backgroundImageURL) bg.style.backgroundImage = url('${backgroundImageURL}');
-    })();
-
-    // ========= particles canvas (lightweight) =========
-    (function(){
-      const canvas = document.getElementById('particles');
-      const ctx = canvas.getContext('2d');
-      let w = canvas.width = innerWidth;
-      let h = canvas.height = innerHeight;
-      const DPR = Math.max(1, window.devicePixelRatio || 1);
-      canvas.width = innerWidth * DPR;
-      canvas.height = innerHeight * DPR;
-      canvas.style.width = innerWidth + 'px';
-      canvas.style.height = innerHeight + 'px';
-      ctx.scale(DPR, DPR);
-
-      let particles = [];
-      const COUNT = Math.max(18, Math.floor((w*h)/80000)); // responsive count
-
-      function rand(min,max){ return Math.random()*(max-min)+min; }
-
-      function make(){
-        particles = [];
-        for(let i=0;i<COUNT;i++){
-          particles.push({
-            x: rand(0,w),
-            y: rand(0,h),
-            r: rand(0.6,2.6),
-            vx: rand(-0.15,0.15),
-            vy: rand(-0.05,0.12),
-            alpha: rand(0.08,0.28)
-          });
-        }
+    async function fetchRates() {
+      try {
+        const res = await fetch(`https://api.exchangerate.host/latest?base=${base}`);
+        const json = await res.json();
+        const rates = json.rates;
+        updateTable(rates);
+        updateChart(rates);
+      } catch (e) {
+        console.error('Error fetching rates', e);
       }
-      make();
+    }
 
-      function resize(){
-        w = canvas.width = innerWidth * DPR;
-        h = canvas.height = innerHeight * DPR;
-        canvas.style.width = innerWidth + 'px';
-        canvas.style.height = innerHeight + 'px';
-        ctx.setTransform(DPR,0,0,DPR,0,0);
-        make();
-      }
-      addEventListener('resize', resize);
-
-      function draw(){
-        ctx.clearRect(0,0,innerWidth,innerHeight);
-        for(let p of particles){
-          p.x += p.vx;
-          p.y -= p.vy;
-          if(p.x < -20) p.x = innerWidth+20;
-          if(p.x > innerWidth+20) p.x = -20;
-          if(p.y < -20) p.y = innerHeight+20;
-          if(p.y > innerHeight+20) p.y = -20;
-          ctx.beginPath();
-          ctx.fillStyle = rgba(212,175,55,${p.alpha});
-          ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-          ctx.fill();
-        }
-        requestAnimationFrame(draw);
-      }
-      draw();
-    })();
-
-    // ========== Scroll reveal (IntersectionObserver) ==========
-    (function(){
-      const obs = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting){
-            e.target.classList.add('revealed');
-            obs.unobserve(e.target);
-          }
-        });
-      }, {threshold: 0.12});
-
-      document.querySelectorAll('.hero-card, .side-panel, .about, .link-card, .hero-card .actions').forEach(el=>{
-        // initial state
-        el.style.opacity = 0; el.style.transform = 'translateY(18px)'; el.style.transition = 'opacity .8s ease, transform .8s cubic-bezier(.2,.9,.3,1)';
-        obs.observe(el);
+    function updateTable(rates) {
+      const body = document.getElementById('ratesBody');
+      body.innerHTML = '';
+      pairs.forEach(p => {
+        const rate = rates[p];
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${p}/${base}</td><td>${rate ? rate.toFixed(4) : '—'}</td>`;
+        body.appendChild(tr);
       });
-    })();
+    }
 
-    // ========== logo micro-interaction ==========
-    (function(){
-      const logo = document.getElementById('logoEl');
-      logo.addEventListener('mouseenter', ()=> logo.classList.add('glow'));
-      logo.addEventListener('mouseleave', ()=> logo.classList.remove('glow'));
-      // small periodic sparkle
-      setInterval(()=>{ logo.classList.add('glow'); setTimeout(()=>logo.classList.remove('glow'),900); }, 4200);
-    })();
+    function updateChart(rates) {
+      const now = new Date().toLocaleTimeString();
+      chart.data.labels.push(now);
+      if (chart.data.labels.length > 20) chart.data.labels.shift();
 
-    // ========== background subtle parallax on pointer move for depth ==========
-    (function(){
-      const bg = document.querySelector('.bg-layer');
-      let cx = innerWidth/2, cy = innerHeight/2;
-      function onMove(e){
-        const x = (e.clientX || (e.touches && e.touches[0].clientX) || cx) - cx;
-        const y = (e.clientY || (e.touches && e.touches[0].clientY) || cy) - cy;
-        const mx = (x / cx) * 0.6; const my = (y / cy) * 0.4;
-        bg.style.transform = translate(${mx}px, ${my}px) scale(1.01);
-      }
-      addEventListener('mousemove', onMove);
-      addEventListener('touchmove', onMove, {passive:true});
-      addEventListener('mouseleave', ()=> bg.style.transform = 'translate(0,0) scale(1)');
-    })();
-
-    // ========== Procedural ambient background (WebAudio) ==========
-    (function(){
-      let audioCtx, masterGain, oscillator1, oscillator2, noiseNode;
-      let playing = false;
-      const toggle = document.getElementById('audioToggle');
-      const vol = document.getElementById('audioVol');
-
-      function setupAudio(){
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        masterGain = audioCtx.createGain();
-        masterGain.gain.value = +vol.value;
-        masterGain.connect(audioCtx.destination);
-
-        // two slow pad oscillators
-        oscillator1 = audioCtx.createOscillator();
-        oscillator1.type = 'sine';
-        oscillator1.frequency.value = 110; // low
-        const g1 = audioCtx.createGain(); g1.gain.value = 0.02;
-        oscillator1.connect(g1); g1.connect(masterGain);
-
-        oscillator2 = audioCtx.createOscillator();
-        oscillator2.type = 'sine';
-        oscillator2.frequency.value = 220;
-        const g2 = audioCtx.createGain(); g2.gain.value = 0.008;
-        oscillator2.connect(g2); g2.connect(masterGain);
-
-        // gentle noise for atmosphere (filtered)
-        const bufferSize = 2 * audioCtx.sampleRate;
-        const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const output = noiseBuffer.getChannelData(0);
-        for (let i = 0; i < bufferSize; i++) { output[i] = (Math.random()*2-1)*0.2; }
-        noiseNode = audioCtx.createBufferSource();
-        noiseNode.buffer = noiseBuffer;
-        noiseNode.loop = true;
-        const noiseFilter = audioCtx.createBiquadFilter();
-        noiseFilter.type = 'lowpass';
-        noiseFilter.frequency.value = 800;
-        const nGain = audioCtx.createGain(); nGain.gain.value = 0.02;
-        noiseNode.connect(noiseFilter); noiseFilter.connect(nGain); nGain.connect(masterGain);
-
-        // subtle slow detune LFOs
-        const lfo = audioCtx.createOscillator(); lfo.frequency.value = 0.07;
-        const lfoGain = audioCtx.createGain(); lfoGain.gain.value = 8;
-        lfo.connect(lfoGain);
-        lfoGain.connect(oscillator1.frequency);
-        lfoGain.connect(oscillator2.frequency);
-
-        oscillator1.start();
-        oscillator2.start();
-        noiseNode.start();
-        lfo.start();
-      }
-
-      function startSound(){
-        if(!audioCtx) setupAudio();
-        if(audioCtx.state === 'suspended') audioCtx.resume();
-        playing = true;
-        toggle.innerText = '⏸';
-        toggle.setAttribute('aria-pressed','true');
-      }
-      function stopSound(){
-        if(audioCtx && audioCtx.state !== 'closed') audioCtx.suspend();
-        playing = false;
-        toggle.innerText = '▶';
-        toggle.setAttribute('aria-pressed','false');
-      }
-
-      toggle.addEventListener('click', ()=>{
-        if(!playing){ startSound(); } else { stopSound(); }
+      pairs.forEach((p, i) => {
+        const rate = rates[p] || null;
+        chart.data.datasets[i].data.push(rate);
+        if (chart.data.datasets[i].data.length > 20) chart.data.datasets[i].data.shift();
       });
 
-      vol.addEventListener('input', ()=> {
-        if(masterGain) masterGain.gain.value = +vol.value;
-      });
+      chart.update();
+    }
 
-      // start autoplay muted on interaction (most browsers require gesture)
-      document.addEventListener('click', function once(){ startSound(); setTimeout(stopSound, 50); document.removeEventListener('click', once); }, {once:true});
-    })();
-
-    // small UX: CTA contact opens a modal-lite
-    (function(){
-      const cta = document.getElementById('cta-contact');
-      cta.addEventListener('click', function(e){
-        e.preventDefault();
-        const modal = document.createElement('div');
-        modal.style.position='fixed';modal.style.inset=0;modal.style.background='rgba(0,0,0,0.6)';modal.style.display='flex';modal.style.alignItems='center';modal.style.justifyContent='center';modal.style.zIndex=2100;
-        modal.innerHTML = 
-          <div style="max-width:520px;width:92%;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;backdrop-filter:blur(8px);color: #f3f4f6;">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
-              <div style="font-weight:800">ارتباط سریع</div>
-              <button id="closeModal" style="background:none;border:none;color:var(--muted);font-weight:700;cursor:pointer">بستن</button>
-            </div>
-            <p style="color:var(--muted);margin-top:10px">برای تماس مستقیم از دکمه‌های زیر استفاده کنید:</p>
-            <div style="display:flex;gap:10px;margin-top:12px">
-              <a class="btn gold" href="https://t.me/mohammadaminfxx" target="_blank">پیام در تلگرام</a>
-              <a class="btn" href="https://instagram.com/mohammadamin.fx" target="_blank">پیام در اینستاگرام</a>
-            </div>
-          </div>;
-        document.body.appendChild(modal);
-        modal.querySelector('#closeModal').addEventListener('click', ()=> modal.remove());
-        modal.addEventListener('click', (ev)=>{ if(ev.target===modal) modal.remove(); });
-      });
-    })();
-
-    // small accessibility: update year
-    document.addEventListener('DOMContentLoaded', ()=> {
-      const footer = document.querySelector('footer');
-      if(footer) footer.innerHTML = © ${new Date().getFullYear()} Mohammad Amin Esmaeili — All Rights Reserved;
-    });
-
+    fetchRates();
+    setInterval(fetchRates, 5000);
   </script>
 </body>
 </html>
