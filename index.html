@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PXR — Mohamad Amin Esmaeili</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://kit.fontawesome.com/1e09b9b6b0.js" crossorigin="anonymous"></script>
+    <style>
+      body {
+        transition: background 0.5s, color 0.5s;
+      }
+      .dark {
+        background: #0a0a0a;
+        color: #f3f3f3;
+      }
+      .gradient {
+        background: linear-gradient(
+          135deg,
+          #111 0%,
+          #222 40%,
+          #4c1d95 90%
+        );
+      }
+      .btn {
+        transition: all 0.3s;
+      }
+      .btn:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+      }
+    </style>
+  </head>
+
+  <body class="font-sans">
+    <!-- HEADER -->
+    <header
+      class="flex justify-between items-center px-6 py-4 gradient text-white shadow-lg"
+    >
+      <h1 class="text-xl font-bold">PXR</h1>
+      <div class="flex items-center gap-3">
+        <select
+          id="lang"
+          class="bg-transparent border border-gray-500 rounded px-2 py-1 text-sm"
+        >
+          <option value="fa">فارسی</option>
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
+        <button
+          id="themeToggle"
+          class="p-2 rounded bg-white/20 hover:bg-white/30 transition"
+        >
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section
+      class="flex flex-col-reverse md:flex-row items-center justify-between px-6 py-12 md:px-16 md:py-20 transition-all"
+    >
+      <div class="max-w-xl space-y-4">
+        <h2 id="title" class="text-3xl md:text-5xl font-bold leading-tight"></h2>
+        <p id="subtitle" class="text-gray-600 dark:text-gray-300 text-lg"></p>
+        <div class="flex gap-4 mt-6">
+          <a
+            href="https://instagram.com/mohammadamin.fx"
+            target="_blank"
+            class="btn flex items-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white px-5 py-3 rounded-full font-semibold"
+          >
+            <i class="fab fa-instagram"></i> Instagram
+          </a>
+          <a
+            href="https://t.me/mohammadaminfxx"
+            target="_blank"
+            class="btn flex items-center gap-2 bg-gradient-to-r from-blue-500 to-sky-500 text-white px-5 py-3 rounded-full font-semibold"
+          >
+            <i class="fab fa-telegram-plane"></i> Telegram
+          </a>
+        </div>
+      </div>
+
+      <div class="relative mb-10 md:mb-0">
+        <img
+          src="photo_2025-10-22_10-57-52.jpg"
+          alt="Mohamad Amin Esmaeili"
+          class="w-64 h-64 md:w-96 md:h-96 object-cover rounded-2xl shadow-2xl border border-gray-700"
+        />
+        <div
+          class="absolute -bottom-6 -right-6 w-64 h-64 bg-purple-600/40 blur-3xl rounded-full animate-pulse"
+        ></div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="px-6 md:px-16 py-10" id="about">
+      <h3 class="text-2xl font-bold mb-4" id="aboutTitle"></h3>
+      <p
+        id="aboutText"
+        class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line"
+      ></p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer
+      class="py-6 text-center text-sm text-gray-500 dark:text-gray-400 border-t border-gray-200 dark:border-gray-800"
+    >
+      © <span id="year"></span> Mohamad Amin Esmaeili — PXR
+    </footer>
+
+    <script>
+      // --- Text translations ---
+      const translations = {
+        fa: {
+          title: "محمد امین اسماعیلی — بنیان‌گذار سبک معاملاتی PXR",
+          subtitle:
+            "PXR ترکیبی از Smart Money، ICT و Liquidity Insight است که ساده‌ترین الگوها را با عمیق‌ترین مفاهیم ترکیب می‌کند.",
+          aboutTitle: "درباره من",
+          aboutText: `من محمد امین اسماعیلی هستم — بنیان‌گذار سبک معاملاتی PXR.
+با بیش از ۳ سال تجربه در بازار فارکس، سبکی را توسعه دادم که تلفیقی از Smart Money + ICT + Liquidity Insight است.
+در این سبک، شما با الگوهای ساده‌ای مثل ترند لاین وارد معامله می‌شوید اما پشت صحنه‌ی همان شکست، MSS و OB قرار دارد.
+من مسیر ۳ ساله‌ی خودم را برای شما در کمتر از ۳ ماه جمع کرده‌ام تا سریع‌تر به درک و سودآوری برسید.`,
+        },
+        en: {
+          title: "Mohamad Amin Esmaeili — Founder of PXR",
+          subtitle:
+            "PXR blends Smart Money, ICT & Liquidity Insight into clear, repeatable patterns for consistent results.",
+          aboutTitle: "About Me",
+          aboutText: `I'm Mohamad Amin Esmaeili — founder of the PXR trading method.
+After 3+ years in Forex, I combined Smart Money + ICT + Liquidity Insight into one unified, easy-to-learn strategy.
+In PXR, you trade simple setups like a trendline break, while behind it MSS and OB structure confirm the logic.
+I’ve condensed my 3-year journey into a 3-month learning path to help traders reach clarity faster.`,
+        },
+        ar: {
+          title: "محمد أمين إسماعيلي — مؤسس PXR",
+          subtitle:
+            "PXR يجمع بين Smart Money و ICT وفهم السيولة لتكوين أنماط بسيطة وفعّالة.",
+          aboutTitle: "عني",
+          aboutText: `أنا محمد أمين إسماعيلي — مؤسس أسلوب التداول PXR.
+بخبرة أكثر من ثلاث سنوات في الفوركس، دمجت Smart Money و ICT وفهم السيولة في أسلوب واحد عملي وسهل.
+في PXR، تتداول باستخدام أنماط بسيطة مثل كسر الترندلاين، لكن وراءها MSS و OB يدعمان القرار.
+اختصرت تجربتي التي دامت ثلاث سنوات في ثلاثة أشهر فقط لتصل إلى فهم وربح أسرع.`,
+        },
+      };
+
+      // --- Elements ---
+      const langSelect = document.getElementById("lang");
+      const themeToggle = document.getElementById("themeToggle");
+      const yearEl = document.getElementById("year");
+
+      const applyLang = (lang) => {
+        const t = translations[lang];
+        document.getElementById("title").textContent = t.title;
+        document.getElementById("subtitle").textContent = t.subtitle;
+        document.getElementById("aboutTitle").textContent = t.aboutTitle;
+        document.getElementById("aboutText").textContent = t.aboutText;
+        document.documentElement.lang = lang;
+        document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
+      };
+
+      // --- Theme ---
+      let darkMode = false;
+      themeToggle.addEventListener("click", () => {
+        darkMode = !darkMode;
+        document.body.classList.toggle("dark", darkMode);
+        themeToggle.innerHTML = darkMode
+          ? '<i class="fas fa-sun"></i>'
+          : '<i class="fas fa-moon"></i>';
+      });
+
+      // --- Language change ---
+      langSelect.addEventListener("change", (e) => applyLang(e.target.value));
+
+      // --- Initialize ---
+      yearEl.textContent = new Date().getFullYear();
+      applyLang("fa");
+
+      // --- Animations ---
+      ScrollReveal().reveal("section", {
+        distance: "40px",
+        origin: "bottom",
+        duration: 1000,
+        easing: "ease-out",
+        interval: 200,
+      });
+    </script>
+  </body>
+</html>
