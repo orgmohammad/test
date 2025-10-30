@@ -10,31 +10,38 @@
     />
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://kit.fontawesome.com/1e09b9b6b0.js" crossorigin="anonymous"></script>
-    <style>
-      body {
-        transition: background 0.5s, color 0.5s;
-      }
-      .dark {
-        background: #0a0a0a;
-        color: #f3f3f3;
-      }
-      .gradient {
-        background: linear-gradient(
-          135deg,
-          #111 0%,
-          #222 40%,
-          #4c1d95 90%
-        );
-      }
-      .btn {
-        transition: all 0.3s;
-      }
-      .btn:hover {
-        transform: scale(1.08);
-        box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
-      }
-    </style>
-  </head>
+   <style>
+  body {
+    transition: background 0.5s, color 0.5s;
+    background: url("https://raw.githubusercontent.com/orgmohammad/test/6b88579234e42355ce3c7d945c2e11a2f2fabf58/photo_2025-10-25_06-29-40.jpg")
+      no-repeat center center fixed;
+    background-size: cover;
+    color: #111;
+  }
+
+  .dark {
+    background: url("https://raw.githubusercontent.com/orgmohammad/test/6b88579234e42355ce3c7d945c2e11a2f2fabf58/photo_2025-10-25_06-29-40.jpg")
+      no-repeat center center fixed;
+    background-size: cover;
+    color: #f3f3f3;
+    backdrop-filter: brightness(0.8);
+  }
+
+  .gradient {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+  }
+
+  .btn {
+    transition: all 0.3s;
+  }
+
+  .btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+  }
+</style>
+
 
   <body class="font-sans">
     <!-- HEADER -->
