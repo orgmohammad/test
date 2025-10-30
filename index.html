@@ -27,18 +27,34 @@
     backdrop-filter: brightness(0.8);
   }
 
-  .gradient {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(10px);
-  }
-
-  .btn {
-    transition: all 0.3s;
-  }
-
-  .btn:hover {
+ .btn:hover {
     transform: scale(1.08);
     box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+  }
+
+  /* 🎨 افکت و رنگ آبی مخصوص اسم و توضیحات */
+  #title {
+    color: #3b82f6; /* آبی خاص */
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.6),
+                 0 0 20px rgba(59, 130, 246, 0.4);
+    transition: all 0.4s ease;
+  }
+
+  body.dark #title {
+    color: #60a5fa;
+    text-shadow: 0 0 15px rgba(96, 165, 250, 0.8),
+                 0 0 25px rgba(96, 165, 250, 0.5);
+  }
+
+  #subtitle {
+    color: #2563eb; /* آبی ملایم‌تر */
+    text-shadow: 0 0 6px rgba(37, 99, 235, 0.4);
+    transition: all 0.4s ease;
+  }
+
+  body.dark #subtitle {
+    color: #93c5fd;
+    text-shadow: 0 0 10px rgba(147, 197, 253, 0.6);
   }
 </style>
 
