@@ -1,152 +1,304 @@
 <!--
-این فایل یک سایت تک‌صفحه‌ای ساده، مدرن و ریسپانسیو است که برای مبتدیان آماده شده.
-راهنما: این کد را در یک فایل به نام index.html ذخیره کنید و با مرورگر باز کنید.
-ما قدم‌به‌قدم جلو می‌رویم: اول این را اجرا کن، بعد من کمک می‌کنم متن‌ها، رنگ‌ها و عکس‌ها را عوض کنیم و آن را روی GitHub Pages منتشر کنیم.
+قالب فروشگاهی شبیه www.mariasis.com
+این یک نسخهٔ آمادهٔ قابل اجرا (استاتیک) است که:
+- صفحهٔ لیست محصولات، جزئیات محصول در مودال
+- سبد خرید با ذخیره در localStorage
+- فرم تسویهٔ ساده (نمونه) — پرداخت واقعی نیاز به درگاه دارد
+
+نحوه استفاده:
+1) این کد را در فایل index.html ذخیره کنید.
+2) فایل را در مرورگر باز کنید تا نسخهٔ اولیه سایت را ببینید.
+3) برای انتشار سریع: آن را در یک مخزن گیت‌هاب قرار دهید و GitHub Pages را فعال کنید.
+
+من بعداً می‌تونم همین پروژه را به Shopify/WooCommerce/React+Stripe تبدیل کنم، اما برای شروع این نسخه کافی و قابل توسعه است.
 -->
 <!doctype html>
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>نمونه سایت مدرن | نام شما</title>
-  <!-- Tailwind CDN برای سادگی و طراحی مدرن -->
+  <title>Mariasis-style Boutique — فروشگاه</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* تغییرات کوچک برای شکل دادن به فونت و افکت */
     body{font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
-    .glass{background: rgba(255,255,255,0.06); backdrop-filter: blur(6px);}
+    .glass{background: rgba(255,255,255,0.06); backdrop-filter: blur(6px);} 
   </style>
 </head>
-<body class="bg-gradient-to-tr from-slate-900 via-indigo-900 to-sky-900 text-slate-100">
-  <!-- ناوبری -->
-  <header class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
-    <a href="#" class="text-2xl font-bold">نام شما</a>
-    <nav class="hidden md:flex gap-6 items-center">
-      <a href="#about" class="hover:underline">درباره</a>
-      <a href="#work" class="hover:underline">نمونه‌کار</a>
-      <a href="#contact" class="hover:underline">تماس</a>
-      <a href="#" class="ml-4 inline-block px-4 py-2 rounded-2xl glass">دانلود رزومه</a>
-    </nav>
-    <button id="navToggle" class="md:hidden p-2 rounded-lg glass">منو</button>
+<body class="bg-slate-50 text-slate-900">
+  <!-- nav -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a class="text-2xl font-bold">MARIASIS</a>
+      <div class="flex items-center gap-4">
+        <nav class="hidden md:flex gap-6">
+          <a href="#shop" class="hover:underline">فروشگاه</a>
+          <a href="#collection" class="hover:underline">کلکسیون</a>
+          <a href="#about" class="hover:underline">درباره ما</a>
+        </nav>
+        <button id="cartBtn" class="p-2 rounded-lg relative">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 7h13" />
+          </svg>
+          <span id="cartCount" class="absolute -top-1 -left-1 bg-red-600 text-white rounded-full text-xs px-2">0</span>
+        </button>
+      </div>
+    </div>
   </header>
 
-  <!-- هِرو -->
-  <section class="max-w-6xl mx-auto px-6 text-center py-20">
-    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">سلام — من یک توسعه‌دهندهٔ وب هستم</h1>
-    <p class="mt-6 text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">ساده، شیک و سریع — من طراحی و پیاده‌سازی وب‌سایت‌های مدرن را انجام می‌دهم. این یک قالب یک‌صفحه‌ای آماده است که می‌توانیم با هم شخصی‌سازی کنیم.</p>
-    <div class="mt-8 flex justify-center gap-4">
-      <a href="#contact" class="px-6 py-3 rounded-full bg-white text-slate-900 font-semibold">درخواست همکاری</a>
-      <a href="#work" class="px-6 py-3 rounded-full border border-white/20">مشاهده نمونه‌کار</a>
-    </div>
-
-    <!-- کارت کوچک اطلاعات -->
-    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="p-6 glass rounded-2xl">
-        <h3 class="text-2xl font-semibold">چابک</h3>
-        <p class="mt-2 text-sm text-slate-300">سایت‌هایی که سریع لود می‌شوند و روی موبایل عالی‌اند.</p>
-      </div>
-      <div class="p-6 glass rounded-2xl">
-        <h3 class="text-2xl font-semibold">طراحی مدرن</h3>
-        <p class="mt-2 text-sm text-slate-300">ظاهر مینیمال، تمرکز بر تایپوگرافی و فاصله‌گذاری.</p>
-      </div>
-      <div class="p-6 glass rounded-2xl">
-        <h3 class="text-2xl font-semibold">قابل توسعه</h3>
-        <p class="mt-2 text-sm text-slate-300">آمادهٔ اضافه کردن بلاگ، صفحه فروش یا هر چیز دیگر.</p>
+  <!-- hero -->
+  <section class="bg-cover bg-center" style="background-image:linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://images.unsplash.com/photo-1520975916137-1c72f4d2f4d6?auto=format&fit=crop&w=1500&q=60')">
+    <div class="max-w-6xl mx-auto px-6 py-20 text-center text-white">
+      <h1 class="text-4xl md:text-6xl font-extrabold">کلکسیون بهاری — Mariasis</h1>
+      <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto">طرح‌های دست‌ساز، پارچه‌های باکیفیت و دوخت استادانه. ارسال داخل ایران.</p>
+      <div class="mt-6">
+        <a href="#shop" class="inline-block px-6 py-3 rounded-full bg-white text-slate-900 font-semibold">خرید کنید</a>
       </div>
     </div>
   </section>
 
-  <!-- درباره -->
-  <section id="about" class="bg-white/5 py-16">
-    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
-      <div>
-        <h2 class="text-3xl font-bold">درباره من</h2>
-        <p class="mt-4 text-slate-300">یک متن نمونه قرار دهید: چه کاری انجام می‌دهید، چه فناوری‌هایی بلدید، و چه چیزی شما را متمایز می‌کند. ما این متن را با هم شخصی‌سازی خواهیم کرد.</p>
-        <ul class="mt-6 space-y-2 text-slate-300">
-          <li>• HTML • CSS • JavaScript</li>
-          <li>• React (اختیاری) • Tailwind CSS</li>
-          <li>• Git و GitHub • Deploy با GitHub Pages</li>
-        </ul>
+  <!-- shop grid -->
+  <main id="shop" class="max-w-6xl mx-auto px-6 py-12">
+    <div class="flex items-center justify-between">
+      <h2 class="text-2xl font-bold">محصولات</h2>
+      <div class="text-sm text-slate-500">نمایش ۱۲ محصول</div>
+    </div>
+
+    <div id="products" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- محصولات توسط جاوااسکریپت اضافه می‌شود -->
+    </div>
+  </main>
+
+  <!-- footer -->
+  <footer class="bg-white border-t mt-12">
+    <div class="max-w-6xl mx-auto px-6 py-8 text-slate-600 text-sm">© 2025 Mariasis — طراحی الهام‌گرفته از سایت نمونه</div>
+  </footer>
+
+  <!-- cart drawer -->
+  <div id="cartDrawer" class="fixed inset-y-0 left-0 w-full md:w-96 bg-white shadow-xl transform translate-x-full transition-transform duration-300">
+    <div class="p-6 h-full flex flex-col">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-bold">سبد خرید</h3>
+        <button id="closeCart" class="text-slate-500">بستن</button>
       </div>
-      <div class="rounded-2xl overflow-hidden shadow-lg">
-        <!-- تصویر نمونه: کاربر می‌تواند تصویر خودش را قرار دهد -->
-        <div class="w-full h-64 bg-gradient-to-br from-indigo-700 to-sky-700 flex items-center justify-center"> 
-          <span class="text-slate-100/80">جای تصویر شما</span>
+      <div id="cartItems" class="mt-4 flex-1 overflow-auto"></div>
+      <div class="mt-4">
+        <div class="flex justify-between items-center">
+          <div class="text-slate-600">جمع</div>
+          <div id="cartTotal" class="text-lg font-bold">0 تومان</div>
+        </div>
+        <div class="mt-4">
+          <button id="checkoutBtn" class="w-full px-4 py-3 rounded-full bg-black text-white">تسویه حساب</button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- نمونه کار -->
-  <section id="work" class="py-16">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="text-3xl font-bold">نمونه‌کارها</h2>
-      <p class="mt-3 text-slate-300">چند پروژهٔ نمونه که میتوانید با هم اضافه یا ویرایش کنیم.</p>
-      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- کارت پروژه نمونه -->
-        <article class="rounded-2xl overflow-hidden glass p-4">
-          <div class="h-40 bg-white/5 rounded-md flex items-end p-4"> 
-            <h3 class="text-lg font-semibold">پروژه ۱</h3>
+  <!-- product modal -->
+  <div id="productModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-lg max-w-3xl w-full overflow-hidden">
+      <div class="md:flex">
+        <div class="md:w-1/2 p-4">
+          <img id="modalImg" src="" alt="" class="w-full h-80 object-cover rounded">
+        </div>
+        <div class="md:w-1/2 p-6">
+          <h3 id="modalTitle" class="text-2xl font-bold"></h3>
+          <div id="modalPrice" class="mt-2 text-xl text-rose-600 font-semibold"></div>
+          <p id="modalDesc" class="mt-4 text-slate-600"></p>
+          <div class="mt-6 flex items-center gap-3">
+            <label>تعداد</label>
+            <input id="modalQty" type="number" min="1" value="1" class="w-20 p-2 rounded border" />
           </div>
-          <p class="mt-3 text-sm text-slate-300">توضیح کوتاه درباره پروژه.</p>
-          <div class="mt-4 flex gap-2">
-            <a class="text-sm underline" href="#">مشاهده</a>
-            <a class="text-sm underline" href="#">کد</a>
+          <div class="mt-6 flex gap-3">
+            <button id="addToCartBtn" class="px-4 py-3 rounded-full bg-rose-600 text-white">افزودن به سبد</button>
+            <button id="closeModal" class="px-4 py-3 rounded-full border">انصراف</button>
           </div>
-        </article>
-        <article class="rounded-2xl overflow-hidden glass p-4">
-          <div class="h-40 bg-white/5 rounded-md flex items-end p-4"> 
-            <h3 class="text-lg font-semibold">پروژه ۲</h3>
-          </div>
-          <p class="mt-3 text-sm text-slate-300">توضیح کوتاه درباره پروژه.</p>
-          <div class="mt-4 flex gap-2">
-            <a class="text-sm underline" href="#">مشاهده</a>
-            <a class="text-sm underline" href="#">کد</a>
-          </div>
-        </article>
-        <article class="rounded-2xl overflow-hidden glass p-4">
-          <div class="h-40 bg-white/5 rounded-md flex items-end p-4"> 
-            <h3 class="text-lg font-semibold">پروژه ۳</h3>
-          </div>
-          <p class="mt-3 text-sm text-slate-300">توضیح کوتاه درباره پروژه.</p>
-          <div class="mt-4 flex gap-2">
-            <a class="text-sm underline" href="#">مشاهده</a>
-            <a class="text-sm underline" href="#">کد</a>
-          </div>
-        </article>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- فرم تماس -->
-  <section id="contact" class="py-16 bg-white/6">
-    <div class="max-w-3xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center">تماس</h2>
-      <p class="text-center mt-3 text-slate-300">برای شروع یک پروژه به من پیام بدهید — فرم زیر صرفاً نمونه است.</p>
-      <form class="mt-8 grid gap-4">
-        <input class="p-3 rounded-lg bg-white/5" placeholder="نام" />
-        <input class="p-3 rounded-lg bg-white/5" placeholder="ایمیل" />
-        <textarea class="p-3 rounded-lg bg-white/5" rows="5" placeholder="پیام"></textarea>
-        <div class="flex justify-center">
-          <button type="button" class="px-6 py-3 rounded-full bg-white text-slate-900 font-semibold">ارسال</button>
+  <!-- checkout mockup modal -->
+  <div id="checkoutModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-lg max-w-2xl w-full p-6">
+      <h3 class="text-xl font-bold">تسویه حساب</h3>
+      <form id="checkoutForm" class="mt-4 grid gap-3">
+        <input required placeholder="نام کامل" class="p-3 rounded border" />
+        <input required placeholder="ایمیل" type="email" class="p-3 rounded border" />
+        <input required placeholder="آدرس" class="p-3 rounded border" />
+        <div class="flex gap-2">
+          <input required placeholder="کد پستی" class="p-3 rounded border flex-1" />
+          <input required placeholder="شماره تلفن" class="p-3 rounded border w-1/2" />
+        </div>
+        <div class="flex gap-2 mt-2">
+          <button type="submit" class="px-4 py-3 rounded-full bg-rose-600 text-white">ثبت سفارش (نمونه)</button>
+          <button type="button" id="cancelCheckout" class="px-4 py-3 rounded-full border">انصراف</button>
         </div>
       </form>
     </div>
-  </section>
-
-  <!-- فوتر -->
-  <footer class="py-8">
-    <div class="max-w-6xl mx-auto px-6 text-center text-slate-400">© 2025 — ساخته شده با ❤️</div>
-  </footer>
+  </div>
 
   <script>
-    // منو برای موبایل
-    const navToggle = document.getElementById('navToggle');
-    navToggle.addEventListener('click', ()=>{
-      const nav = document.querySelector('header nav');
-      if(nav.style.display === 'flex') nav.style.display = '';
-      else nav.style.display = 'flex';
+    // داده‌های نمونه محصولات — بعدا می‌تونیم این رو از یک API بخونیم
+    const products = [
+      {id:1, title:'پیراهن آستین‌بلند ابریشمی', price:4200000, img:'https://images.unsplash.com/photo-1520975916137-1c72f4d2f4d6?auto=format&fit=crop&w=900&q=60', desc:'پارچهٔ ممتاز، دوخت دستی.'},
+      {id:2, title:'مانتو کتان سفید', price:3500000, img:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=60', desc:'کات کلاسیک، مناسب روزمره.'},
+      {id:3, title:'شال دست‌دوز', price:1250000, img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=60', desc:'رنگ‌های زنده و نقش‌دار.'},
+      {id:4, title:'کت کشمیر', price:8900000, img:'https://images.unsplash.com/photo-1542060749-4b0ff3b8efc3?auto=format&fit=crop&w=900&q=60', desc:'نرمی و لوکس بودن.'},
+      {id:5, title:'شلوار پارچه‌ای', price:2100000, img:'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=60', desc:'برش مُد روز.'},
+      {id:6, title:'کفش دست‌دوز', price:6200000, img:'https://images.unsplash.com/photo-1528701800487-2762cdb6e3b3?auto=format&fit=crop&w=900&q=60', desc:'چرم طبیعی، دوام بالا.'}
+    ];
+
+    // DOM refs
+    const productsEl = document.getElementById('products');
+    const productModal = document.getElementById('productModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalQty = document.getElementById('modalQty');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const closeModal = document.getElementById('closeModal');
+
+    const cartBtn = document.getElementById('cartBtn');
+    const cartDrawer = document.getElementById('cartDrawer');
+    const closeCart = document.getElementById('closeCart');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+
+    const checkoutModal = document.getElementById('checkoutModal');
+    const cancelCheckout = document.getElementById('cancelCheckout');
+    const checkoutForm = document.getElementById('checkoutForm');
+
+    // cart state
+    let cart = JSON.parse(localStorage.getItem('cart')||'[]');
+    let currentProduct = null;
+
+    function formatToman(n){
+      return n.toLocaleString('fa-IR') + ' تومان';
+    }
+
+    function renderProducts(){
+      productsEl.innerHTML = products.map(p=>`
+        <article class="rounded-2xl overflow-hidden bg-white shadow">
+          <div class="h-64 bg-slate-100 flex items-end p-4 cursor-pointer" data-id="${p.id}">
+            <img src="${p.img}" alt="" class="absolute inset-0 w-full h-64 object-cover opacity-90">
+            <div class="relative z-10 bg-white/80 rounded p-3">
+              <h3 class="font-semibold">${p.title}</h3>
+              <div class="text-rose-600 font-bold mt-1">${formatToman(p.price)}</div>
+            </div>
+          </div>
+          <div class="p-4 flex justify-between items-center">
+            <button data-id="${p.id}" class="text-sm underline viewBtn">مشاهده</button>
+            <button data-id="${p.id}" class="px-3 py-2 rounded-full bg-rose-600 text-white addBtn">افزودن</button>
+          </div>
+        </article>
+      `).join('');
+
+      // attach listeners
+      document.querySelectorAll('.viewBtn').forEach(b=>b.addEventListener('click', e=>{
+        const id = +e.target.dataset.id; openModal(id);
+      }));
+      document.querySelectorAll('.addBtn').forEach(b=>b.addEventListener('click', e=>{
+        const id = +e.target.dataset.id; addToCart(id,1);
+      }));
+      document.querySelectorAll('[data-id]').forEach(el=>{
+        el.addEventListener('click', (e)=>{
+          if(e.target.closest('article')) return; // avoid double
+        })
+      })
+    }
+
+    function openModal(id){
+      const p = products.find(x=>x.id===id);
+      currentProduct = p;
+      modalImg.src = p.img;
+      modalTitle.textContent = p.title;
+      modalPrice.textContent = formatToman(p.price);
+      modalDesc.textContent = p.desc;
+      modalQty.value = 1;
+      productModal.classList.remove('hidden');
+      productModal.classList.add('flex');
+    }
+    closeModal.addEventListener('click', ()=>{ productModal.classList.add('hidden'); productModal.classList.remove('flex'); });
+
+    function saveCart(){ localStorage.setItem('cart', JSON.stringify(cart)); renderCart(); }
+
+    function addToCart(id, qty){
+      const p = products.find(x=>x.id===id);
+      const existing = cart.find(i=>i.id===id);
+      if(existing){ existing.qty += qty; }
+      else cart.push({id:p.id, title:p.title, price:p.price, img:p.img, qty:qty});
+      saveCart();
+      openCart();
+    }
+
+    addToCartBtn.addEventListener('click', ()=>{
+      if(!currentProduct) return;
+      const q = Math.max(1, +modalQty.value);
+      addToCart(currentProduct.id, q);
+      productModal.classList.add('hidden'); productModal.classList.remove('flex');
     });
+
+    function renderCart(){
+      cartItemsEl.innerHTML = cart.length ? cart.map(i=>`
+        <div class="flex items-center gap-3 border-b py-3">
+          <img src="${i.img}" class="w-16 h-16 object-cover rounded" />
+          <div class="flex-1">
+            <div class="font-semibold">${i.title}</div>
+            <div class="text-sm text-slate-500">${formatToman(i.price)} × ${i.qty}</div>
+          </div>
+          <div class="text-right">
+            <div class="font-bold">${formatToman(i.price*i.qty)}</div>
+            <div class="mt-2 flex gap-2">
+              <button data-id="${i.id}" class="text-sm decrease">-</button>
+              <button data-id="${i.id}" class="text-sm increase">+</button>
+              <button data-id="${i.id}" class="text-sm text-red-600 remove">حذف</button>
+            </div>
+          </div>
+        </div>
+      `).join('') : '<div class="text-slate-500">سبد خرید خالی است.</div>';
+
+      // bind
+      cartItemsEl.querySelectorAll('.increase').forEach(b=>b.addEventListener('click', e=>{ const id=+e.target.dataset.id; changeQty(id,1)}));
+      cartItemsEl.querySelectorAll('.decrease').forEach(b=>b.addEventListener('click', e=>{ const id=+e.target.dataset.id; changeQty(id,-1)}));
+      cartItemsEl.querySelectorAll('.remove').forEach(b=>b.addEventListener('click', e=>{ const id=+e.target.dataset.id; removeItem(id)}));
+
+      const total = cart.reduce((s,i)=>s + i.price*i.qty, 0);
+      cartTotal.textContent = formatToman(total);
+      cartCount.textContent = cart.reduce((s,i)=>s + i.qty,0);
+    }
+
+    function changeQty(id, delta){
+      const it = cart.find(i=>i.id===id); if(!it) return;
+      it.qty += delta; if(it.qty<=0) cart = cart.filter(x=>x.id!==id);
+      saveCart();
+    }
+    function removeItem(id){ cart = cart.filter(x=>x.id!==id); saveCart(); }
+
+    // cart drawer
+    function openCart(){ cartDrawer.style.transform = 'translateX(0)'; cartDrawer.classList.remove('translate-x-full'); }
+    function closeCartFn(){ cartDrawer.style.transform = ''; cartDrawer.classList.add('translate-x-full'); }
+    cartBtn.addEventListener('click', ()=>{ renderCart(); openCart(); });
+    closeCart.addEventListener('click', ()=>{ closeCartFn(); });
+
+    // checkout flow (mock)
+    checkoutBtn.addEventListener('click', ()=>{ checkoutModal.classList.remove('hidden'); checkoutModal.classList.add('flex'); });
+    cancelCheckout.addEventListener('click', ()=>{ checkoutModal.classList.add('hidden'); checkoutModal.classList.remove('flex'); });
+    checkoutForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      // نمونهٔ ثبت سفارش: اینجا باید API یا درگاه پرداخت وصل شود.
+      alert('سفارش با موفقیت ثبت شد — (نمونه)');
+      cart = []; saveCart(); checkoutModal.classList.add('hidden'); checkoutModal.classList.remove('flex'); closeCartFn();
+    });
+
+    // initial
+    renderProducts(); renderCart();
+
+    // accessibility: click outside modals to close
+    productModal.addEventListener('click', (e)=>{ if(e.target===productModal){ productModal.classList.add('hidden'); productModal.classList.remove('flex'); } });
+    checkoutModal.addEventListener('click', (e)=>{ if(e.target===checkoutModal){ checkoutModal.classList.add('hidden'); checkoutModal.classList.remove('flex'); } });
   </script>
 </body>
 </html>
