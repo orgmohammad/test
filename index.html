@@ -1,277 +1,152 @@
-<!DOCTYPE html>
+<!--
+این فایل یک سایت تک‌صفحه‌ای ساده، مدرن و ریسپانسیو است که برای مبتدیان آماده شده.
+راهنما: این کد را در یک فایل به نام index.html ذخیره کنید و با مرورگر باز کنید.
+ما قدم‌به‌قدم جلو می‌رویم: اول این را اجرا کن، بعد من کمک می‌کنم متن‌ها، رنگ‌ها و عکس‌ها را عوض کنیم و آن را روی GitHub Pages منتشر کنیم.
+-->
+<!doctype html>
 <html lang="fa" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PXR — Mohamad Amin Esmaeili</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="https://kit.fontawesome.com/1e09b9b6b0.js" crossorigin="anonymous"></script>
-   <style>
-  body {
-    transition: background 0.5s, color 0.5s;
-    background: url("https://raw.githubusercontent.com/orgmohammad/test/6b88579234e42355ce3c7d945c2e11a2f2fabf58/photo_2025-10-25_06-29-40.jpg")
-      no-repeat center center fixed;
-    background-size: cover;
-    color: #111;
-  }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>نمونه سایت مدرن | نام شما</title>
+  <!-- Tailwind CDN برای سادگی و طراحی مدرن -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* تغییرات کوچک برای شکل دادن به فونت و افکت */
+    body{font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    .glass{background: rgba(255,255,255,0.06); backdrop-filter: blur(6px);}
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-slate-900 via-indigo-900 to-sky-900 text-slate-100">
+  <!-- ناوبری -->
+  <header class="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
+    <a href="#" class="text-2xl font-bold">نام شما</a>
+    <nav class="hidden md:flex gap-6 items-center">
+      <a href="#about" class="hover:underline">درباره</a>
+      <a href="#work" class="hover:underline">نمونه‌کار</a>
+      <a href="#contact" class="hover:underline">تماس</a>
+      <a href="#" class="ml-4 inline-block px-4 py-2 rounded-2xl glass">دانلود رزومه</a>
+    </nav>
+    <button id="navToggle" class="md:hidden p-2 rounded-lg glass">منو</button>
+  </header>
 
-  .dark {
-    background: url("https://raw.githubusercontent.com/orgmohammad/test/6b88579234e42355ce3c7d945c2e11a2f2fabf58/photo_2025-10-25_06-29-40.jpg")
-      no-repeat center center fixed;
-    background-size: cover;
-    color: #f3f3f3;
-    backdrop-filter: brightness(0.8);
-  }
+  <!-- هِرو -->
+  <section class="max-w-6xl mx-auto px-6 text-center py-20">
+    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">سلام — من یک توسعه‌دهندهٔ وب هستم</h1>
+    <p class="mt-6 text-lg md:text-xl text-slate-300 max-w-3xl mx-auto">ساده، شیک و سریع — من طراحی و پیاده‌سازی وب‌سایت‌های مدرن را انجام می‌دهم. این یک قالب یک‌صفحه‌ای آماده است که می‌توانیم با هم شخصی‌سازی کنیم.</p>
+    <div class="mt-8 flex justify-center gap-4">
+      <a href="#contact" class="px-6 py-3 rounded-full bg-white text-slate-900 font-semibold">درخواست همکاری</a>
+      <a href="#work" class="px-6 py-3 rounded-full border border-white/20">مشاهده نمونه‌کار</a>
+    </div>
 
- .btn:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
-  }
-
-  /* 🎨 افکت و رنگ آبی مخصوص اسم و توضیحات */
-  #title {
-    color: #3b82f6; /* آبی خاص */
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.6),
-                 0 0 20px rgba(59, 130, 246, 0.4);
-    transition: all 0.4s ease;
-  }
-
-  body.dark #title {
-    color: #60a5fa;
-    text-shadow: 0 0 15px rgba(96, 165, 250, 0.8),
-                 0 0 25px rgba(96, 165, 250, 0.5);
-  }
-
-  #subtitle {
-    color: #2563eb; /* آبی ملایم‌تر */
-    text-shadow: 0 0 6px rgba(37, 99, 235, 0.4);
-    transition: all 0.4s ease;
-  }
-
-  body.dark #subtitle {
-    color: #93c5fd;
-    text-shadow: 0 0 10px rgba(147, 197, 253, 0.6);
-  }
-     /* 🎨 استایل متن درباره من */
-#aboutText {
-  color: #ffffff; /* سفید خالص */
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5),
-               0 0 16px rgba(255, 255, 255, 0.3);
-  transition: all 0.4s ease;
-}
-
-/* در حالت تاریک (کمی درخشان‌تر بشه) */
-body.dark #aboutText {
-  color: #f9fafb;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.7),
-               0 0 20px rgba(255, 255, 255, 0.5);
-}
-     /* 🎨 استایل عنوان درباره من */
-#aboutTitle {
-  color: #8b5cf6; /* بنفش-آبی لوکس */
-  text-shadow: 0 0 10px rgba(139, 92, 246, 0.6),
-               0 0 20px rgba(147, 51, 234, 0.4);
-  transition: all 0.4s ease;
-}
-
-/* حالت تاریک — کمی درخشان‌تر */
-body.dark #aboutTitle {
-  color: #a78bfa;
-  text-shadow: 0 0 14px rgba(167, 139, 250, 0.8),
-               0 0 25px rgba(167, 139, 250, 0.5);
-}
-     
-/* 🎨 استایل منوی انتخاب زبان */
-#lang {
-  background: rgba(30, 30, 40, 0.7);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(147, 51, 234, 0.4);
-  color: #e0e0ff;
-  border-radius: 8px;
-  padding: 6px 10px;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 10px rgba(76, 29, 149, 0.3);
-}
-
-/* وقتی موس روش میره */
-#lang:hover {
-  background: rgba(76, 29, 149, 0.4);
-  box-shadow: 0 0 15px rgba(139, 92, 246, 0.6);
-}
-
-/* حالت تاریک */
-body.dark #lang {
-  background: rgba(20, 20, 30, 0.7);
-  color: #c7d2fe;
-  border: 1px solid rgba(139, 92, 246, 0.5);
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
-}
-
-/* حالت تاریک - هاور */
-body.dark #lang:hover {
-  background: rgba(88, 28, 135, 0.6);
-  box-shadow: 0 0 18px rgba(147, 51, 234, 0.7);
-}
-
-</style>
-
-
-  <body class="font-sans">
-    <!-- HEADER -->
-    <header
-      class="flex justify-between items-center px-6 py-4 gradient text-white shadow-lg"
-    >
-      <h1 class="text-xl font-bold">PXR</h1>
-      <div class="flex items-center gap-3">
-        <select
-          id="lang"
-          class="bg-transparent border border-gray-500 rounded px-2 py-1 text-sm"
-        >
-          <option value="fa">فارسی</option>
-          <option value="en">English</option>
-          <option value="ar">العربية</option>
-        </select>
-        <button
-          id="themeToggle"
-          class="p-2 rounded bg-white/20 hover:bg-black/30 transition"
-        >
-          <i class="fas fa-moon"></i>
-        </button>
+    <!-- کارت کوچک اطلاعات -->
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-6 glass rounded-2xl">
+        <h3 class="text-2xl font-semibold">چابک</h3>
+        <p class="mt-2 text-sm text-slate-300">سایت‌هایی که سریع لود می‌شوند و روی موبایل عالی‌اند.</p>
       </div>
-    </header>
+      <div class="p-6 glass rounded-2xl">
+        <h3 class="text-2xl font-semibold">طراحی مدرن</h3>
+        <p class="mt-2 text-sm text-slate-300">ظاهر مینیمال، تمرکز بر تایپوگرافی و فاصله‌گذاری.</p>
+      </div>
+      <div class="p-6 glass rounded-2xl">
+        <h3 class="text-2xl font-semibold">قابل توسعه</h3>
+        <p class="mt-2 text-sm text-slate-300">آمادهٔ اضافه کردن بلاگ، صفحه فروش یا هر چیز دیگر.</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- HERO -->
-    <section
-      class="flex flex-col-reverse md:flex-row items-center justify-between px-6 py-12 md:px-16 md:py-20 transition-all"
-    >
-      <div class="max-w-xl space-y-4">
-        <h2 id="title" class="text-3xl md:text-5xl font-bold leading-tight"></h2>
-        <p id="subtitle" class="text-gray-600 dark:text-gray-300 text-lg"></p>
-        <div class="flex gap-4 mt-6">
-          <a
-            href="https://instagram.com/mohammadamin.fx"
-            target="_blank"
-            class="btn flex items-center gap-2 bg-gradient-to-r from-pink-600 to-purple-600 text-white px-5 py-3 rounded-full font-semibold"
-          >
-            <i class="fab fa-instagram"></i> Instagram
-          </a>
-          <a
-            href="https://t.me/mohammadaminfxx"
-            target="_blank"
-            class="btn flex items-center gap-2 bg-gradient-to-r from-blue-500 to-sky-500 text-white px-5 py-3 rounded-full font-semibold"
-          >
-            <i class="fab fa-telegram-plane"></i> Telegram
-          </a>
+  <!-- درباره -->
+  <section id="about" class="bg-white/5 py-16">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h2 class="text-3xl font-bold">درباره من</h2>
+        <p class="mt-4 text-slate-300">یک متن نمونه قرار دهید: چه کاری انجام می‌دهید، چه فناوری‌هایی بلدید، و چه چیزی شما را متمایز می‌کند. ما این متن را با هم شخصی‌سازی خواهیم کرد.</p>
+        <ul class="mt-6 space-y-2 text-slate-300">
+          <li>• HTML • CSS • JavaScript</li>
+          <li>• React (اختیاری) • Tailwind CSS</li>
+          <li>• Git و GitHub • Deploy با GitHub Pages</li>
+        </ul>
+      </div>
+      <div class="rounded-2xl overflow-hidden shadow-lg">
+        <!-- تصویر نمونه: کاربر می‌تواند تصویر خودش را قرار دهد -->
+        <div class="w-full h-64 bg-gradient-to-br from-indigo-700 to-sky-700 flex items-center justify-center"> 
+          <span class="text-slate-100/80">جای تصویر شما</span>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="relative mb-10 md:mb-0">
-        <img
-          src="photo_2025-10-22_10-57-52.jpg"
-          alt="Mohamad Amin Esmaeili"
-          class="w-64 h-64 md:w-96 md:h-96 object-cover rounded-2xl shadow-2xl border border-gray-700"
-        />
-        <div
-          class="absolute -bottom-6 -right-6 w-64 h-64 bg-purple-600/40 blur-3xl rounded-full animate-pulse"
-        ></div>
+  <!-- نمونه کار -->
+  <section id="work" class="py-16">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-bold">نمونه‌کارها</h2>
+      <p class="mt-3 text-slate-300">چند پروژهٔ نمونه که میتوانید با هم اضافه یا ویرایش کنیم.</p>
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- کارت پروژه نمونه -->
+        <article class="rounded-2xl overflow-hidden glass p-4">
+          <div class="h-40 bg-white/5 rounded-md flex items-end p-4"> 
+            <h3 class="text-lg font-semibold">پروژه ۱</h3>
+          </div>
+          <p class="mt-3 text-sm text-slate-300">توضیح کوتاه درباره پروژه.</p>
+          <div class="mt-4 flex gap-2">
+            <a class="text-sm underline" href="#">مشاهده</a>
+            <a class="text-sm underline" href="#">کد</a>
+          </div>
+        </article>
+        <article class="rounded-2xl overflow-hidden glass p-4">
+          <div class="h-40 bg-white/5 rounded-md flex items-end p-4"> 
+            <h3 class="text-lg font-semibold">پروژه ۲</h3>
+          </div>
+          <p class="mt-3 text-sm text-slate-300">توضیح کوتاه درباره پروژه.</p>
+          <div class="mt-4 flex gap-2">
+            <a class="text-sm underline" href="#">مشاهده</a>
+            <a class="text-sm underline" href="#">کد</a>
+          </div>
+        </article>
+        <article class="rounded-2xl overflow-hidden glass p-4">
+          <div class="h-40 bg-white/5 rounded-md flex items-end p-4"> 
+            <h3 class="text-lg font-semibold">پروژه ۳</h3>
+          </div>
+          <p class="mt-3 text-sm text-slate-300">توضیح کوتاه درباره پروژه.</p>
+          <div class="mt-4 flex gap-2">
+            <a class="text-sm underline" href="#">مشاهده</a>
+            <a class="text-sm underline" href="#">کد</a>
+          </div>
+        </article>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ABOUT -->
-    <section class="px-6 md:px-16 py-10" id="about">
-      <h3 class="text-2xl font-bold mb-4" id="aboutTitle"></h3>
-      <p
-        id="aboutText"
-        class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line"
-      ></p>
-    </section>
+  <!-- فرم تماس -->
+  <section id="contact" class="py-16 bg-white/6">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-3xl font-bold text-center">تماس</h2>
+      <p class="text-center mt-3 text-slate-300">برای شروع یک پروژه به من پیام بدهید — فرم زیر صرفاً نمونه است.</p>
+      <form class="mt-8 grid gap-4">
+        <input class="p-3 rounded-lg bg-white/5" placeholder="نام" />
+        <input class="p-3 rounded-lg bg-white/5" placeholder="ایمیل" />
+        <textarea class="p-3 rounded-lg bg-white/5" rows="5" placeholder="پیام"></textarea>
+        <div class="flex justify-center">
+          <button type="button" class="px-6 py-3 rounded-full bg-white text-slate-900 font-semibold">ارسال</button>
+        </div>
+      </form>
+    </div>
+  </section>
 
-    <!-- FOOTER -->
-    <footer
-      class="py-6 text-center text-sm text-blue-500 dark:text-blue-400 border-t border-blue-200 dark:border-blue-800"
-    >
-      © <span id="year"></span> Mohamad Amin Esmaeili — PXR
-    </footer>
+  <!-- فوتر -->
+  <footer class="py-8">
+    <div class="max-w-6xl mx-auto px-6 text-center text-slate-400">© 2025 — ساخته شده با ❤️</div>
+  </footer>
 
-    <script>
-      // --- Text translations ---
-      const translations = {
-        fa: {
-          title: "محمد امین اسماعیلی  بنیان‌گذار سبک معاملاتی PXR",
-          subtitle:
-            "PXR ترکیبی از Smart Money، ICT و Liquidity Insight است که ساده‌ترین الگوها را با عمیق‌ترین مفاهیم ترکیب می‌کند.",
-          aboutTitle: "درباره من",
-          aboutText: `من محمد امین اسماعیلی هستم — بنیان‌گذار سبک معاملاتی PXR.
-با بیش از ۳ سال تجربه در بازار فارکس، سبکی را توسعه دادم که تلفیقی از Smart Money + ICT + Liquidity Insight است.
-در این سبک، شما با الگوهای ساده‌ای مثل ترند لاین وارد معامله می‌شوید اما پشت صحنه‌ی همان شکست، MSS و OB قرار دارد.
-من مسیر ۳ ساله‌ی خودم را برای شما در کمتر از ۳ ماه جمع کرده‌ام تا سریع‌تر به درک و سودآوری برسید.`,
-        },
-        en: {
-          title: "Mohamad Amin Esmaeili — Founder of PXR",
-          subtitle:
-            "PXR blends Smart Money, ICT & Liquidity Insight into clear, repeatable patterns for consistent results.",
-          aboutTitle: "About Me",
-          aboutText: `I'm Mohamad Amin Esmaeili — founder of the PXR trading method.
-After 3+ years in Forex, I combined Smart Money + ICT + Liquidity Insight into one unified, easy-to-learn strategy.
-In PXR, you trade simple setups like a trendline break, while behind it MSS and OB structure confirm the logic.
-I’ve condensed my 3-year journey into a 3-month learning path to help traders reach clarity faster.`,
-        },
-        ar: {
-          title: "محمد أمين إسماعيلي — مؤسس PXR",
-          subtitle:
-            "PXR يجمع بين Smart Money و ICT وفهم السيولة لتكوين أنماط بسيطة وفعّالة.",
-          aboutTitle: "عني",
-          aboutText: `أنا محمد أمين إسماعيلي — مؤسس أسلوب التداول PXR.
-بخبرة أكثر من ثلاث سنوات في الفوركس، دمجت Smart Money و ICT وفهم السيولة في أسلوب واحد عملي وسهل.
-في PXR، تتداول باستخدام أنماط بسيطة مثل كسر الترندلاين، لكن وراءها MSS و OB يدعمان القرار.
-اختصرت تجربتي التي دامت ثلاث سنوات في ثلاثة أشهر فقط لتصل إلى فهم وربح أسرع.`,
-        },
-      };
-
-      // --- Elements ---
-      const langSelect = document.getElementById("lang");
-      const themeToggle = document.getElementById("themeToggle");
-      const yearEl = document.getElementById("year");
-
-      const applyLang = (lang) => {
-        const t = translations[lang];
-        document.getElementById("title").textContent = t.title;
-        document.getElementById("subtitle").textContent = t.subtitle;
-        document.getElementById("aboutTitle").textContent = t.aboutTitle;
-        document.getElementById("aboutText").textContent = t.aboutText;
-        document.documentElement.lang = lang;
-        document.documentElement.dir = lang === "en" ? "ltr" : "rtl";
-      };
-
-      // --- Theme ---
-      let darkMode = false;
-      themeToggle.addEventListener("click", () => {
-        darkMode = !darkMode;
-        document.body.classList.toggle("dark", darkMode);
-        themeToggle.innerHTML = darkMode
-          ? '<i class="fas fa-sun"></i>'
-          : '<i class="fas fa-moon"></i>';
-      });
-
-      // --- Language change ---
-      langSelect.addEventListener("change", (e) => applyLang(e.target.value));
-
-      // --- Initialize ---
-      yearEl.textContent = new Date().getFullYear();
-      applyLang("fa");
-
-      // --- Animations ---
-      ScrollReveal().reveal("section", {
-        distance: "40px",
-        origin: "bottom",
-        duration: 1000,
-        easing: "ease-out",
-        interval: 200,
-      });
-    </script>
-  </body>
+  <script>
+    // منو برای موبایل
+    const navToggle = document.getElementById('navToggle');
+    navToggle.addEventListener('click', ()=>{
+      const nav = document.querySelector('header nav');
+      if(nav.style.display === 'flex') nav.style.display = '';
+      else nav.style.display = 'flex';
+    });
+  </script>
+</body>
 </html>
