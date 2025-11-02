@@ -1,304 +1,260 @@
 <!--
-قالب فروشگاهی شبیه www.mariasis.com
-این یک نسخهٔ آمادهٔ قابل اجرا (استاتیک) است که:
-- صفحهٔ لیست محصولات، جزئیات محصول در مودال
-- سبد خرید با ذخیره در localStorage
-- فرم تسویهٔ ساده (نمونه) — پرداخت واقعی نیاز به درگاه دارد
+Dark Luxury Shop - Static single-file storefront (English)
+Purpose:
+- Dark (black & white) luxury theme, responsive
+- English content suitable for international audience
+- No payment gateway: orders via WhatsApp or Instagram DM
+- Clicking a product opens a dedicated product "page" (client-side routing -> clean URLs like /#product/slug)
+- Each product page includes description, images, Instagram & WhatsApp buttons and a clear instruction to order via DM/WhatsApp
 
-نحوه استفاده:
-1) این کد را در فایل index.html ذخیره کنید.
-2) فایل را در مرورگر باز کنید تا نسخهٔ اولیه سایت را ببینید.
-3) برای انتشار سریع: آن را در یک مخزن گیت‌هاب قرار دهید و GitHub Pages را فعال کنید.
+How to use:
+1) Save this content to a file named `index.html`.
+2) Open locally in browser to preview.
+3) Replace LOGO_URL and product images/links with your real assets (instructions below).
+4) To publish: push this file to a GitHub repo and enable GitHub Pages (or host on any static host).
 
-من بعداً می‌تونم همین پروژه را به Shopify/WooCommerce/React+Stripe تبدیل کنم، اما برای شروع این نسخه کافی و قابل توسعه است.
+If you paste your logo URL and 3 product links/images right now I will inject them into the file and give you a ready-to-deploy version.
 -->
 <!doctype html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mariasis-style Boutique — فروشگاه</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body{font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
-    .glass{background: rgba(255,255,255,0.06); backdrop-filter: blur(6px);} 
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Brand — Dark Luxury Boutique</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{--bg:#0b0b0b;--card:#0f0f10;--muted:#9aa0a6;--accent:#ffffff}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--accent);font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial}
+  a{color:inherit}
+  .glass{background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));backdrop-filter:blur(6px)}
+  .brand-txt{letter-spacing:2px}
+</style>
 </head>
-<body class="bg-slate-50 text-slate-900">
-  <!-- nav -->
-  <header class="bg-white shadow-sm">
+<body class="antialiased">
+  <!-- NAV -->
+  <header class="sticky top-0 z-40 bg-transparent backdrop-blur-sm">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <a class="text-2xl font-bold">MARIASIS</a>
       <div class="flex items-center gap-4">
-        <nav class="hidden md:flex gap-6">
-          <a href="#shop" class="hover:underline">فروشگاه</a>
-          <a href="#collection" class="hover:underline">کلکسیون</a>
-          <a href="#about" class="hover:underline">درباره ما</a>
-        </nav>
-        <button id="cartBtn" class="p-2 rounded-lg relative">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 7h13" />
-          </svg>
-          <span id="cartCount" class="absolute -top-1 -left-1 bg-red-600 text-white rounded-full text-xs px-2">0</span>
-        </button>
+        <!-- Replace LOGO_URL with your logo image URL -->
+        <img id="brandLogo" src="LOGO_URL" alt="Brand" class="h-10 w-auto object-contain" onerror="this.style.display='none'" />
+        <a href="#" class="text-xl font-semibold brand-txt">BRAND</a>
       </div>
+      <nav class="hidden md:flex gap-6 text-sm text-gray-300 items-center">
+        <a href="#shop" class="hover:underline">Shop</a>
+        <a href="#about" class="hover:underline">About</a>
+        <a href="#contact" class="hover:underline">Contact</a>
+      </nav>
+      <div class="md:hidden text-sm text-gray-300">Menu</div>
     </div>
   </header>
 
-  <!-- hero -->
-  <section class="bg-cover bg-center" style="background-image:linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url('https://images.unsplash.com/photo-1520975916137-1c72f4d2f4d6?auto=format&fit=crop&w=1500&q=60')">
-    <div class="max-w-6xl mx-auto px-6 py-20 text-center text-white">
-      <h1 class="text-4xl md:text-6xl font-extrabold">کلکسیون بهاری — Mariasis</h1>
-      <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto">طرح‌های دست‌ساز، پارچه‌های باکیفیت و دوخت استادانه. ارسال داخل ایران.</p>
-      <div class="mt-6">
-        <a href="#shop" class="inline-block px-6 py-3 rounded-full bg-white text-slate-900 font-semibold">خرید کنید</a>
+  <!-- HERO -->
+  <section class="py-24">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h1 class="text-4xl md:text-6xl font-extrabold">Curated Luxury — Minimalist Collections</h1>
+      <p class="mt-4 text-gray-400 max-w-2xl mx-auto">Handpicked pieces for a refined wardrobe. To place an order, contact us on Instagram or WhatsApp — links on each product page.</p>
+      <div class="mt-8 flex justify-center gap-4">
+        <a href="#shop" class="px-6 py-3 rounded-full bg-white text-black font-semibold">Explore Collection</a>
+        <a href="#about" class="px-6 py-3 rounded-full border border-white/10">About the Brand</a>
       </div>
     </div>
   </section>
 
-  <!-- shop grid -->
-  <main id="shop" class="max-w-6xl mx-auto px-6 py-12">
+  <!-- SHOP GRID -->
+  <main id="shop" class="max-w-6xl mx-auto px-6 py-8">
     <div class="flex items-center justify-between">
-      <h2 class="text-2xl font-bold">محصولات</h2>
-      <div class="text-sm text-slate-500">نمایش ۱۲ محصول</div>
+      <h2 class="text-2xl font-bold">Shop</h2>
+      <div class="text-sm text-gray-500">Showing curated pieces</div>
     </div>
 
-    <div id="products" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- محصولات توسط جاوااسکریپت اضافه می‌شود -->
-    </div>
+    <div id="productsGrid" class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </main>
 
-  <!-- footer -->
-  <footer class="bg-white border-t mt-12">
-    <div class="max-w-6xl mx-auto px-6 py-8 text-slate-600 text-sm">© 2025 Mariasis — طراحی الهام‌گرفته از سایت نمونه</div>
+  <!-- PRODUCT TEMPLATE: client-side routing to product view -->
+  <template id="product-card-tmpl">
+    <article class="rounded-2xl overflow-hidden bg-gradient-to-b from-[#111111] to-[#0d0d0d] shadow-lg">
+      <div class="relative h-80 overflow-hidden">
+        <img class="absolute inset-0 w-full h-full object-cover card-img" src="" alt="">
+        <div class="absolute bottom-4 left-4 bg-black/60 px-3 py-2 rounded">
+          <div class="font-semibold card-title"></div>
+          <div class="text-sm text-gray-400 card-price mt-1"></div>
+        </div>
+      </div>
+      <div class="p-4 flex justify-between items-center">
+        <button class="text-sm view-btn underline">View details</button>
+        <div class="text-sm text-gray-400">Quick info</div>
+      </div>
+    </article>
+  </template>
+
+  <!-- PRODUCT PAGE (rendered client-side) -->
+  <div id="productView" class="fixed inset-0 bg-black/75 hidden items-start justify-center overflow-auto p-8">
+    <div class="max-w-5xl w-full bg-[#0d0d0d] rounded-2xl overflow-hidden shadow-xl">
+      <div class="md:flex">
+        <div class="md:w-1/2 p-6 bg-black/20 flex items-center justify-center">
+          <img id="pvImg" src="" alt="" class="w-full h-96 object-cover rounded">
+        </div>
+        <div class="md:w-1/2 p-8">
+          <div class="flex items-center justify-between">
+            <h3 id="pvTitle" class="text-2xl font-bold"></h3>
+            <button id="closePv" class="text-gray-400">Close</button>
+          </div>
+          <div id="pvPrice" class="mt-3 text-xl text-white/90 font-semibold"></div>
+          <p id="pvDesc" class="mt-4 text-gray-400"></p>
+
+          <div class="mt-6 space-y-3">
+            <div class="text-sm text-gray-400">To place an order:</div>
+            <div class="flex gap-3">
+              <!-- WhatsApp and Instagram buttons will be filled dynamically -->
+              <a id="pvWhatsapp" target="_blank" class="px-4 py-3 rounded-full bg-green-600 text-black font-semibold">Order on WhatsApp</a>
+              <a id="pvInsta" target="_blank" class="px-4 py-3 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-black font-semibold">Message on Instagram</a>
+            </div>
+            <div class="mt-2 text-sm text-gray-400">You can message us to confirm size, stock and shipping. Mention the product name when messaging.</div>
+          </div>
+
+          <div class="mt-8 text-sm text-gray-500">SKU: <span id="pvSku">—</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT & CONTACT -->
+  <section id="about" class="max-w-6xl mx-auto px-6 py-12">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <h2 class="text-2xl font-bold">About the Brand</h2>
+        <p class="mt-4 text-gray-400">A short international-facing paragraph about your brand: craftsmanship, materials, limited editions, shipping policy, and ethical practices. Keep it concise and confident.</p>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold">Contact</h3>
+        <p class="mt-2 text-gray-400">For wholesale or press enquiries, email: <a href="mailto:hello@brand.com" class="underline">hello@brand.com</a></p>
+        <div class="mt-4 flex gap-3">
+          <a id="siteWhatsapp" target="_blank" class="px-4 py-2 rounded-full bg-green-600 text-black font-semibold">WhatsApp</a>
+          <a id="siteInsta" target="_blank" class="px-4 py-2 rounded-full bg-gradient-to-r from-pink-500 via-purple-500 to-yellow-400 text-black font-semibold">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-8">
+    <div class="max-w-6xl mx-auto px-6 text-center text-gray-500">© <span id="yr"></span> Brand — All rights reserved</div>
   </footer>
 
-  <!-- cart drawer -->
-  <div id="cartDrawer" class="fixed inset-y-0 left-0 w-full md:w-96 bg-white shadow-xl transform translate-x-full transition-transform duration-300">
-    <div class="p-6 h-full flex flex-col">
-      <div class="flex items-center justify-between">
-        <h3 class="text-lg font-bold">سبد خرید</h3>
-        <button id="closeCart" class="text-slate-500">بستن</button>
-      </div>
-      <div id="cartItems" class="mt-4 flex-1 overflow-auto"></div>
-      <div class="mt-4">
-        <div class="flex justify-between items-center">
-          <div class="text-slate-600">جمع</div>
-          <div id="cartTotal" class="text-lg font-bold">0 تومان</div>
-        </div>
-        <div class="mt-4">
-          <button id="checkoutBtn" class="w-full px-4 py-3 rounded-full bg-black text-white">تسویه حساب</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<script>
+// ========== Replaceable data ==========
+// Provide your assets or let me inject them when you paste links.
+const BRAND = {
+  name: 'BRAND',
+  logo: 'LOGO_URL', // replace with your logo URL
+  instagram: 'https://www.instagram.com/yourprofile',
+  whatsapp: 'https://wa.me/1234567890', // international format without +; example: wa.me/98912... for Iran
+}
 
-  <!-- product modal -->
-  <div id="productModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4">
-    <div class="bg-white rounded-lg max-w-3xl w-full overflow-hidden">
-      <div class="md:flex">
-        <div class="md:w-1/2 p-4">
-          <img id="modalImg" src="" alt="" class="w-full h-80 object-cover rounded">
-        </div>
-        <div class="md:w-1/2 p-6">
-          <h3 id="modalTitle" class="text-2xl font-bold"></h3>
-          <div id="modalPrice" class="mt-2 text-xl text-rose-600 font-semibold"></div>
-          <p id="modalDesc" class="mt-4 text-slate-600"></p>
-          <div class="mt-6 flex items-center gap-3">
-            <label>تعداد</label>
-            <input id="modalQty" type="number" min="1" value="1" class="w-20 p-2 rounded border" />
-          </div>
-          <div class="mt-6 flex gap-3">
-            <button id="addToCartBtn" class="px-4 py-3 rounded-full bg-rose-600 text-white">افزودن به سبد</button>
-            <button id="closeModal" class="px-4 py-3 rounded-full border">انصراف</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+// Products array: replace images, titles, slugs, descriptions and whatsapp/instagram URLs per product if needed.
+const PRODUCTS = [
+  {
+    id: 'linen-shirt',
+    title: 'Linen Tailored Shirt',
+    price: 350,
+    currency: 'USD',
+    img: 'https://images.unsplash.com/photo-1520975916137-1c72f4d2f4d6?auto=format&fit=crop&w=900&q=60',
+    desc: 'Handpicked linen with a tailored fit. Limited stock. Made in small batches.',
+    sku: 'LS-001',
+    insta: BRAND.instagram,
+    whatsapp: BRAND.whatsapp
+  },
+  {
+    id: 'cashmere-cardigan',
+    title: 'Cashmere Cardigan',
+    price: 680,
+    currency: 'USD',
+    img: 'https://images.unsplash.com/photo-1542060749-4b0ff3b8efc3?auto=format&fit=crop&w=900&q=60',
+    desc: 'Luxurious cashmere with impeccable stitching. Dry-clean only.',
+    sku: 'CC-010',
+    insta: BRAND.instagram,
+    whatsapp: BRAND.whatsapp
+  },
+  {
+    id: 'handmade-shawl',
+    title: 'Handmade Silk Shawl',
+    price: 220,
+    currency: 'USD',
+    img: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=60',
+    desc: 'Silk shawl hand-dyed with exclusive patterns.',
+    sku: 'HS-007',
+    insta: BRAND.instagram,
+    whatsapp: BRAND.whatsapp
+  }
+]
 
-  <!-- checkout mockup modal -->
-  <div id="checkoutModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center p-4">
-    <div class="bg-white rounded-lg max-w-2xl w-full p-6">
-      <h3 class="text-xl font-bold">تسویه حساب</h3>
-      <form id="checkoutForm" class="mt-4 grid gap-3">
-        <input required placeholder="نام کامل" class="p-3 rounded border" />
-        <input required placeholder="ایمیل" type="email" class="p-3 rounded border" />
-        <input required placeholder="آدرس" class="p-3 rounded border" />
-        <div class="flex gap-2">
-          <input required placeholder="کد پستی" class="p-3 rounded border flex-1" />
-          <input required placeholder="شماره تلفن" class="p-3 rounded border w-1/2" />
-        </div>
-        <div class="flex gap-2 mt-2">
-          <button type="submit" class="px-4 py-3 rounded-full bg-rose-600 text-white">ثبت سفارش (نمونه)</button>
-          <button type="button" id="cancelCheckout" class="px-4 py-3 rounded-full border">انصراف</button>
-        </div>
-      </form>
-    </div>
-  </div>
+// ========== Utilities ==========
+function formatPrice(p, cur){ return `${p.toLocaleString('en-US')} ${cur}` }
 
-  <script>
-    // داده‌های نمونه محصولات — بعدا می‌تونیم این رو از یک API بخونیم
-    const products = [
-      {id:1, title:'پیراهن آستین‌بلند ابریشمی', price:4200000, img:'https://images.unsplash.com/photo-1520975916137-1c72f4d2f4d6?auto=format&fit=crop&w=900&q=60', desc:'پارچهٔ ممتاز، دوخت دستی.'},
-      {id:2, title:'مانتو کتان سفید', price:3500000, img:'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=900&q=60', desc:'کات کلاسیک، مناسب روزمره.'},
-      {id:3, title:'شال دست‌دوز', price:1250000, img:'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=900&q=60', desc:'رنگ‌های زنده و نقش‌دار.'},
-      {id:4, title:'کت کشمیر', price:8900000, img:'https://images.unsplash.com/photo-1542060749-4b0ff3b8efc3?auto=format&fit=crop&w=900&q=60', desc:'نرمی و لوکس بودن.'},
-      {id:5, title:'شلوار پارچه‌ای', price:2100000, img:'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=60', desc:'برش مُد روز.'},
-      {id:6, title:'کفش دست‌دوز', price:6200000, img:'https://images.unsplash.com/photo-1528701800487-2762cdb6e3b3?auto=format&fit=crop&w=900&q=60', desc:'چرم طبیعی، دوام بالا.'}
-    ];
+// ========== Render products grid ==========
+const grid = document.getElementById('productsGrid');
+const cardTmpl = document.getElementById('product-card-tmpl');
+PRODUCTS.forEach(p => {
+  const node = cardTmpl.content.cloneNode(true);
+  node.querySelector('.card-img').src = p.img;
+  node.querySelector('.card-img').alt = p.title;
+  node.querySelector('.card-title').textContent = p.title;
+  node.querySelector('.card-price').textContent = formatPrice(p.price, p.currency);
+  const viewBtn = node.querySelector('.view-btn');
+  viewBtn.addEventListener('click', ()=> openProduct(p.id));
+  // also make whole card clickable
+  node.querySelector('article').addEventListener('click', (e)=>{ if(e.target.closest('.view-btn')) return; openProduct(p.id) });
+  grid.appendChild(node);
+});
 
-    // DOM refs
-    const productsEl = document.getElementById('products');
-    const productModal = document.getElementById('productModal');
-    const modalImg = document.getElementById('modalImg');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalPrice = document.getElementById('modalPrice');
-    const modalDesc = document.getElementById('modalDesc');
-    const modalQty = document.getElementById('modalQty');
-    const addToCartBtn = document.getElementById('addToCartBtn');
-    const closeModal = document.getElementById('closeModal');
+// ========== Client-side routing to product view ==========
+const productView = document.getElementById('productView');
+const pvImg = document.getElementById('pvImg');
+const pvTitle = document.getElementById('pvTitle');
+const pvPrice = document.getElementById('pvPrice');
+const pvDesc = document.getElementById('pvDesc');
+const pvSku = document.getElementById('pvSku');
+const pvWhatsapp = document.getElementById('pvWhatsapp');
+const pvInsta = document.getElementById('pvInsta');
+const closePv = document.getElementById('closePv');
 
-    const cartBtn = document.getElementById('cartBtn');
-    const cartDrawer = document.getElementById('cartDrawer');
-    const closeCart = document.getElementById('closeCart');
-    const cartItemsEl = document.getElementById('cartItems');
-    const cartCount = document.getElementById('cartCount');
-    const cartTotal = document.getElementById('cartTotal');
-    const checkoutBtn = document.getElementById('checkoutBtn');
+function openProduct(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  pvImg.src = p.img; pvTitle.textContent = p.title; pvPrice.textContent = formatPrice(p.price,p.currency); pvDesc.textContent = p.desc; pvSku.textContent = p.sku;
+  pvWhatsapp.href = p.whatsapp; pvInsta.href = p.insta;
+  // update url hash for shareable link
+  history.pushState({product:id}, '', `#product/${id}`);
+  productView.classList.remove('hidden'); productView.classList.add('flex');
+}
+closePv.addEventListener('click', ()=>{ closeProduct(); });
+productView.addEventListener('click', (e)=>{ if(e.target===productView) closeProduct(); });
+function closeProduct(){ productView.classList.add('hidden'); productView.classList.remove('flex'); history.pushState({}, '', window.location.pathname); }
 
-    const checkoutModal = document.getElementById('checkoutModal');
-    const cancelCheckout = document.getElementById('cancelCheckout');
-    const checkoutForm = document.getElementById('checkoutForm');
+// support direct linking to #product/slug
+function checkHash(){ const h = location.hash; if(h.startsWith('#product/')){ const id = h.split('/')[1]; openProduct(id); } }
+window.addEventListener('popstate', ()=>{ checkHash(); });
+checkHash();
 
-    // cart state
-    let cart = JSON.parse(localStorage.getItem('cart')||'[]');
-    let currentProduct = null;
+// ========== Fill brand links and logo ==========
+if(BRAND.logo && BRAND.logo !== 'LOGO_URL'){ document.getElementById('brandLogo').src = BRAND.logo; }
+document.getElementById('siteInsta').href = BRAND.instagram; document.getElementById('siteWhatsapp').href = BRAND.whatsapp;
+document.getElementById('pvInsta').href = BRAND.instagram; document.getElementById('pvWhatsapp').href = BRAND.whatsapp;
 
-    function formatToman(n){
-      return n.toLocaleString('fa-IR') + ' تومان';
-    }
+// set year
+document.getElementById('yr').textContent = new Date().getFullYear();
 
-    function renderProducts(){
-      productsEl.innerHTML = products.map(p=>`
-        <article class="rounded-2xl overflow-hidden bg-white shadow">
-          <div class="h-64 bg-slate-100 flex items-end p-4 cursor-pointer" data-id="${p.id}">
-            <img src="${p.img}" alt="" class="absolute inset-0 w-full h-64 object-cover opacity-90">
-            <div class="relative z-10 bg-white/80 rounded p-3">
-              <h3 class="font-semibold">${p.title}</h3>
-              <div class="text-rose-600 font-bold mt-1">${formatToman(p.price)}</div>
-            </div>
-          </div>
-          <div class="p-4 flex justify-between items-center">
-            <button data-id="${p.id}" class="text-sm underline viewBtn">مشاهده</button>
-            <button data-id="${p.id}" class="px-3 py-2 rounded-full bg-rose-600 text-white addBtn">افزودن</button>
-          </div>
-        </article>
-      `).join('');
+// Accessibility: keyboard close
+window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeProduct(); });
 
-      // attach listeners
-      document.querySelectorAll('.viewBtn').forEach(b=>b.addEventListener('click', e=>{
-        const id = +e.target.dataset.id; openModal(id);
-      }));
-      document.querySelectorAll('.addBtn').forEach(b=>b.addEventListener('click', e=>{
-        const id = +e.target.dataset.id; addToCart(id,1);
-      }));
-      document.querySelectorAll('[data-id]').forEach(el=>{
-        el.addEventListener('click', (e)=>{
-          if(e.target.closest('article')) return; // avoid double
-        })
-      })
-    }
-
-    function openModal(id){
-      const p = products.find(x=>x.id===id);
-      currentProduct = p;
-      modalImg.src = p.img;
-      modalTitle.textContent = p.title;
-      modalPrice.textContent = formatToman(p.price);
-      modalDesc.textContent = p.desc;
-      modalQty.value = 1;
-      productModal.classList.remove('hidden');
-      productModal.classList.add('flex');
-    }
-    closeModal.addEventListener('click', ()=>{ productModal.classList.add('hidden'); productModal.classList.remove('flex'); });
-
-    function saveCart(){ localStorage.setItem('cart', JSON.stringify(cart)); renderCart(); }
-
-    function addToCart(id, qty){
-      const p = products.find(x=>x.id===id);
-      const existing = cart.find(i=>i.id===id);
-      if(existing){ existing.qty += qty; }
-      else cart.push({id:p.id, title:p.title, price:p.price, img:p.img, qty:qty});
-      saveCart();
-      openCart();
-    }
-
-    addToCartBtn.addEventListener('click', ()=>{
-      if(!currentProduct) return;
-      const q = Math.max(1, +modalQty.value);
-      addToCart(currentProduct.id, q);
-      productModal.classList.add('hidden'); productModal.classList.remove('flex');
-    });
-
-    function renderCart(){
-      cartItemsEl.innerHTML = cart.length ? cart.map(i=>`
-        <div class="flex items-center gap-3 border-b py-3">
-          <img src="${i.img}" class="w-16 h-16 object-cover rounded" />
-          <div class="flex-1">
-            <div class="font-semibold">${i.title}</div>
-            <div class="text-sm text-slate-500">${formatToman(i.price)} × ${i.qty}</div>
-          </div>
-          <div class="text-right">
-            <div class="font-bold">${formatToman(i.price*i.qty)}</div>
-            <div class="mt-2 flex gap-2">
-              <button data-id="${i.id}" class="text-sm decrease">-</button>
-              <button data-id="${i.id}" class="text-sm increase">+</button>
-              <button data-id="${i.id}" class="text-sm text-red-600 remove">حذف</button>
-            </div>
-          </div>
-        </div>
-      `).join('') : '<div class="text-slate-500">سبد خرید خالی است.</div>';
-
-      // bind
-      cartItemsEl.querySelectorAll('.increase').forEach(b=>b.addEventListener('click', e=>{ const id=+e.target.dataset.id; changeQty(id,1)}));
-      cartItemsEl.querySelectorAll('.decrease').forEach(b=>b.addEventListener('click', e=>{ const id=+e.target.dataset.id; changeQty(id,-1)}));
-      cartItemsEl.querySelectorAll('.remove').forEach(b=>b.addEventListener('click', e=>{ const id=+e.target.dataset.id; removeItem(id)}));
-
-      const total = cart.reduce((s,i)=>s + i.price*i.qty, 0);
-      cartTotal.textContent = formatToman(total);
-      cartCount.textContent = cart.reduce((s,i)=>s + i.qty,0);
-    }
-
-    function changeQty(id, delta){
-      const it = cart.find(i=>i.id===id); if(!it) return;
-      it.qty += delta; if(it.qty<=0) cart = cart.filter(x=>x.id!==id);
-      saveCart();
-    }
-    function removeItem(id){ cart = cart.filter(x=>x.id!==id); saveCart(); }
-
-    // cart drawer
-    function openCart(){ cartDrawer.style.transform = 'translateX(0)'; cartDrawer.classList.remove('translate-x-full'); }
-    function closeCartFn(){ cartDrawer.style.transform = ''; cartDrawer.classList.add('translate-x-full'); }
-    cartBtn.addEventListener('click', ()=>{ renderCart(); openCart(); });
-    closeCart.addEventListener('click', ()=>{ closeCartFn(); });
-
-    // checkout flow (mock)
-    checkoutBtn.addEventListener('click', ()=>{ checkoutModal.classList.remove('hidden'); checkoutModal.classList.add('flex'); });
-    cancelCheckout.addEventListener('click', ()=>{ checkoutModal.classList.add('hidden'); checkoutModal.classList.remove('flex'); });
-    checkoutForm.addEventListener('submit', (e)=>{
-      e.preventDefault();
-      // نمونهٔ ثبت سفارش: اینجا باید API یا درگاه پرداخت وصل شود.
-      alert('سفارش با موفقیت ثبت شد — (نمونه)');
-      cart = []; saveCart(); checkoutModal.classList.add('hidden'); checkoutModal.classList.remove('flex'); closeCartFn();
-    });
-
-    // initial
-    renderProducts(); renderCart();
-
-    // accessibility: click outside modals to close
-    productModal.addEventListener('click', (e)=>{ if(e.target===productModal){ productModal.classList.add('hidden'); productModal.classList.remove('flex'); } });
-    checkoutModal.addEventListener('click', (e)=>{ if(e.target===checkoutModal){ checkoutModal.classList.add('hidden'); checkoutModal.classList.remove('flex'); } });
-  </script>
+// ========== Helpful notes for you ==========
+/*
+- To replace logo: change BRAND.logo value to the URL of your logo image.
+- To replace product images and data: edit the PRODUCTS array.
+- For WhatsApp link format: https://wa.me/COUNTRYCODEPHONENUMBER (no +, no dashes). Use text prefill: https://wa.me/1234567890?text=I%20want%20to%20order%20Linen%20Shirt
+- For Instagram messaging use your profile URL (https://www.instagram.com/yourprofile) or direct link to product post.
+- If you want each product to open a new browser page (separate HTML files) I can generate 3 product HTML files for you. Paste your 3 product image URLs and short descriptions and I will produce ready-to-deploy files.
+*/
+</script>
 </body>
 </html>
