@@ -5,7 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>رامیرا — خانه</title>
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ✨ Fade-in نرم ویدیو */
+    .hero video {
+      opacity: 0;
+      animation: fadeVideo 2.5s ease forwards;
+    }
+
+    @keyframes fadeVideo {
+      from {
+        opacity: 0;
+        transform: scale(1.05);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* ✨ افکت ظاهر شدن متن */
+    .hero-content {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeText 2s ease 1s forwards;
+    }
+
+    @keyframes fadeText {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
+
 <body>
 
   <!-- 🔹 هدر -->
@@ -47,4 +81,3 @@
 
 </body>
 </html>
-
