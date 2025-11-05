@@ -1,0 +1,248 @@
+@import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Farsi-Digits/Vazirmatn-FD-font-face.css');
+
+/* 🎯 تنظیمات پایه */
+:root {
+  --bg-color: #fafafa;
+  --text-color: #222;
+  --accent: #d63384;
+  --card-bg: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Vazirmatn FD', sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  direction: rtl;
+  scroll-behavior: smooth;
+}
+
+/* 🎀 هدر */
+header.site-header {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #eee;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  width: 140px;
+}
+
+nav a {
+  margin-right: 1.2rem;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--accent);
+}
+
+/* 🩵 بخش معرفی برند (Home) */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.45);
+  z-index: -1;
+}
+
+.hero-content {
+  max-width: 600px;
+  padding: 2rem;
+  animation: fadeIn 2s ease forwards;
+}
+
+.hero h1 {
+  font-size: 2.6rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  margin-bottom: 2rem;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  padding: 0.9rem 2rem;
+  font-size: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s, opacity 0.3s;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+/* 🛍️ بخش محصولات */
+.container {
+  max-width: 1100px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.product-card {
+  text-decoration: none;
+  color: inherit;
+  background: var(--card-bg);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.card-img img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.product-card h3 {
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0.8rem 0 0.3rem;
+}
+
+.price {
+  text-align: center;
+  color: var(--accent);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* 🧷 فوتر */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  border-top: 1px solid #ddd;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-top: 3rem;
+}
+
+/* 💬 دکمه‌های واتساپ و اینستاگرام */
+.social-btn {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 999;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.social-btn img {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+.social-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+
+/* واتساپ */
+.social-btn.whatsapp {
+  background: linear-gradient(135deg, #25D366, #1EBE57);
+  bottom: 20px;
+  right: 20px;
+}
+
+/* اینستاگرام */
+.social-btn.instagram {
+  background: linear-gradient(135deg, #F58529, #DD2A7B, #8134AF);
+  bottom: 85px;
+  right: 20px;
+}
+
+/* 🌙 حالت تاریک */
+body.dark {
+  --bg-color: #1a1a1a;
+  --text-color: #f1f1f1;
+  --card-bg: #2a2a2a;
+  --accent: #ff8ab0;
+}
+
+body.dark header.site-header {
+  background: rgba(26,26,26,0.85);
+  border-bottom: 1px solid #333;
+}
+
+/* 📱 ریسپانسیو */
+@media (max-width: 768px) {
+  header.site-header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  nav {
+    margin-top: 0.5rem;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+
+  .card-img img {
+    height: 250px;
+  }
+}
