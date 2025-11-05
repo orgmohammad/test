@@ -7,40 +7,74 @@
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* ✨ Fade-in نرم ویدیو */
-    .hero video {
+    /* 🎬 ویدیو تمام‌صفحه زیر کل سایت */
+    .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.45);
       opacity: 0;
       animation: fadeVideo 2.5s ease forwards;
     }
 
     @keyframes fadeVideo {
-      from {
-        opacity: 0;
-        transform: scale(1.05);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
+      from { opacity: 0; transform: scale(1.05); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    /* ✨ افکت ظاهر شدن متن */
+    /* ✨ افکت متن روی ویدیو */
     .hero-content {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
       opacity: 0;
       transform: translateY(20px);
       animation: fadeText 2s ease 1s forwards;
     }
 
     @keyframes fadeText {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* حذف بک‌گراند و حاشیه‌های اضافه */
+    body {
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    header.site-header {
+      background: transparent;
+      border: none;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    footer {
+      background: rgba(0,0,0,0.4);
+      color: #fff;
     }
   </style>
 </head>
 
 <body>
+
+  <!-- 🎥 ویدیو پس‌زمینه کل صفحه -->
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="video.mp4" type="video/mp4">
+    مرورگر شما از ویدیو پشتیبانی نمی‌کند.
+  </video>
 
   <!-- 🔹 هدر -->
   <header class="site-header">
@@ -51,18 +85,11 @@
     </nav>
   </header>
 
-  <!-- 🎥 بخش معرفی برند با ویدیو فول‌اسکرین -->
-  <section class="hero">
-    <video autoplay muted loop playsinline>
-      <source src="video.mp4" type="video/mp4">
-      مرورگر شما از ویدیو پشتیبانی نمی‌کند.
-    </video>
-
-    <div class="hero-content">
-      <h1>رامیرا</h1>
-      <p>برندی با اصالت، طراحی مدرن و دوخت خاص برای بانوان شیک‌پوش ایرانی.</p>
-      <a href="products.html" class="btn-primary">مشاهده محصولات</a>
-    </div>
+  <!-- ✨ متن روی ویدیو -->
+  <section class="hero-content">
+    <h1>رامیرا</h1>
+    <p>برندی با اصالت، طراحی مدرن و دوخت خاص برای بانوان شیک‌پوش ایرانی.</p>
+    <a href="products.html" class="btn-primary">مشاهده محصولات</a>
   </section>
 
   <!-- 💬 دکمه‌های واتساپ و اینستاگرام -->
