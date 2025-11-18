@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>رامیرا — خانه</title>
+  <title>DORAMIN — خانه</title>
   <link rel="stylesheet" href="style.css">
 
   <style>
-    /* 🎬 ویدیو تمام‌صفحه زیر کل سایت */
     .bg-video {
       position: fixed;
       top: 0;
@@ -26,7 +25,6 @@
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* ✨ افکت متن روی ویدیو */
     .hero-content {
       position: relative;
       z-index: 2;
@@ -46,7 +44,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* حذف بک‌گراند و حاشیه‌های اضافه */
     body {
       margin: 0;
       overflow-x: hidden;
@@ -59,51 +56,98 @@
       top: 0;
       width: 100%;
       z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 25px;
     }
+
+    .logo {
+      width: 120px;
+      height: auto;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 10px;
+      font-size: 18px;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #fff;
+      color: #000;
+      padding: 10px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 17px;
+      margin-top: 10px;
+    }
+
+    .social-btn {
+      position: fixed;
+      bottom: 20px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .whatsapp { right: 20px; }
+    .instagram { right: 90px; }
 
     footer {
       background: rgba(0,0,0,0.4);
       color: #fff;
+      text-align: center;
+      padding: 15px 0;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- 🎥 ویدیو پس‌زمینه کل صفحه -->
+  <!-- ویدیو پس‌زمینه -->
   <video class="bg-video" autoplay muted loop playsinline>
-    <source src="video.mp4" type="video/mp4">
+    <source src="https://raw.githubusercontent.com/orgmohammad/test/6526fe97c95ba16516315e7c1e840c7802ad1194/Create_a_short_202511171327_6piw5.mp4" type="video/mp4">
     مرورگر شما از ویدیو پشتیبانی نمی‌کند.
   </video>
 
-  <!-- 🔹 هدر -->
+  <!-- هدر -->
   <header class="site-header">
-    <img src="https://raw.githubusercontent.com/orgmohammad/ramira/3173bad7a45378534ce74cd5603111356bd5ee39/ChatGPT%20Image%20Sep%2021%2C%202025%2C%2006_16_32%20AM.png" alt="لوگو راميرا" class="logo">
+    <img src="https://raw.githubusercontent.com/orgmohammad/test/2af58144bd19a689055f0b16ed5187e2b273e9e2/Gemini_Generated_Image_cnn5h5cnn5h5cnn5%20(1).png"
+      alt="لوگو DORAMIN" class="logo">
+
     <nav>
       <a href="index.html" class="active">خانه</a>
       <a href="products.html">محصولات</a>
     </nav>
   </header>
 
-  <!-- ✨ متن روی ویدیو -->
+  <!-- متن روی ویدیو -->
   <section class="hero-content">
-    <h1>رامیرا</h1>
-    <p>برندی با اصالت، طراحی مدرن و دوخت خاص برای بانوان شیک‌پوش ایرانی.</p>
+    <h1>DORAMIN</h1>
+    <p>جزئیات کوچک، استایل بزرگ.</p>
     <a href="products.html" class="btn-primary">مشاهده محصولات</a>
   </section>
 
-  <!-- 💬 دکمه‌های واتساپ و اینستاگرام -->
-  <a href="https://wa.me/989120653481" class="social-btn whatsapp" target="_blank" title="گفت‌وگو در واتساپ">
-    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="واتساپ">
+  <!-- واتساپ -->
+  <a href="https://wa.me/989120653481" class="social-btn whatsapp" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="32">
   </a>
 
-  <a href="https://www.instagram.com/ramira.mode" class="social-btn instagram" target="_blank" title="صفحه اینستاگرام رامیرا">
-    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="اینستاگرام">
+  <!-- اینستاگرام -->
+  <a href="https://www.instagram.com/doramin_accessory" class="social-btn instagram" target="_blank">
+    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" width="32">
   </a>
 
-  <!-- 🩶 فوتر -->
+  <!-- فوتر -->
   <footer>
-    <p>© ۲۰۲۵ رامیرا — طراحی شده توسط orgmohmd 💖</p>
+    <p>designed by orgmohmd</p>
   </footer>
 
 </body>
